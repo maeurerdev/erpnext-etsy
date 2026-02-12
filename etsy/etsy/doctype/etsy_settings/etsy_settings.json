@@ -1,0 +1,141 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-01-06 13:20:20.625888",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "etsy_enabled",
+  "sales_order_section",
+  "sales_order_sync_interval",
+  "sales_order_last_sync",
+  "column_break_ybwx",
+  "sales_order_scheduler_link",
+  "sales_order_next_sync",
+  "item_section",
+  "item_sync_interval",
+  "item_last_sync",
+  "column_break_mpox",
+  "item_scheduler_link",
+  "item_next_sync"
+ ],
+ "fields": [
+  {
+   "default": "0",
+   "fieldname": "etsy_enabled",
+   "fieldtype": "Check",
+   "label": "Enable Synchronisation"
+  },
+  {
+   "fieldname": "column_break_ybwx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "sales_order_scheduler_link",
+   "fieldname": "sales_order_last_sync",
+   "fieldtype": "Datetime",
+   "is_virtual": 1,
+   "label": "Last Sync",
+   "read_only": 1
+  },
+  {
+   "depends_on": "sales_order_scheduler_link",
+   "fieldname": "sales_order_next_sync",
+   "fieldtype": "Datetime",
+   "is_virtual": 1,
+   "label": "Next Sync",
+   "read_only": 1
+  },
+  {
+   "default": "5",
+   "description": "in minutes. Range: [1-60].\nSet to 0 to disable Sync.",
+   "fieldname": "sales_order_sync_interval",
+   "fieldtype": "Int",
+   "label": "Sync Interval",
+   "mandatory_depends_on": "etsy_enabled",
+   "non_negative": 1
+  },
+  {
+   "description": "Scheduled Job Type",
+   "fieldname": "sales_order_scheduler_link",
+   "fieldtype": "Link",
+   "label": "Scheduler Link",
+   "options": "Scheduled Job Type",
+   "read_only": 1
+  },
+  {
+   "default": "24",
+   "description": "in hours. Range: [1-24].\nSet to 0 to disable Sync.",
+   "fieldname": "item_sync_interval",
+   "fieldtype": "Int",
+   "label": "Sync Interval",
+   "mandatory_depends_on": "etsy_enabled",
+   "non_negative": 1
+  },
+  {
+   "depends_on": "item_scheduler_link",
+   "fieldname": "item_last_sync",
+   "fieldtype": "Datetime",
+   "is_virtual": 1,
+   "label": "Last Sync",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_mpox",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Scheduled Job Type",
+   "fieldname": "item_scheduler_link",
+   "fieldtype": "Link",
+   "label": "Scheduler Link",
+   "options": "Scheduled Job Type",
+   "read_only": 1
+  },
+  {
+   "depends_on": "item_scheduler_link",
+   "fieldname": "item_next_sync",
+   "fieldtype": "Datetime",
+   "is_virtual": 1,
+   "label": "Next Sync",
+   "read_only": 1
+  },
+  {
+   "depends_on": "etsy_enabled",
+   "fieldname": "item_section",
+   "fieldtype": "Section Break",
+   "label": "Item - Synchronisation"
+  },
+  {
+   "depends_on": "etsy_enabled",
+   "fieldname": "sales_order_section",
+   "fieldtype": "Section Break",
+   "label": "Sales Order - Synchronisation"
+  }
+ ],
+ "grid_page_length": 50,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-01-20 10:06:23.593196",
+ "modified_by": "Administrator",
+ "module": "Etsy",
+ "name": "Etsy Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

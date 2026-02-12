@@ -1,0 +1,226 @@
+{
+ "actions": [],
+ "autoname": "field:listing_id",
+ "creation": "2026-01-24 11:43:05.786684",
+ "default_view": "Image",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "listing_tab",
+  "listing_id",
+  "status",
+  "image",
+  "section_break_wppm",
+  "etsy_shop",
+  "column_break_bofe",
+  "views",
+  "column_break_wmwp",
+  "likes",
+  "section_break_kmvr",
+  "title",
+  "description",
+  "inventory",
+  "settings_tab",
+  "item_section",
+  "item_name",
+  "item_group",
+  "stock_uom",
+  "column_break_vwnc",
+  "is_stock_item"
+ ],
+ "fields": [
+  {
+   "fieldname": "listing_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Listing ID",
+   "read_only": 1,
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Small Text",
+   "label": "Title",
+   "max_height": "4em"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description"
+  },
+  {
+   "fieldname": "inventory",
+   "fieldtype": "Long Text",
+   "label": "Inventory",
+   "read_only": 1
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "hidden": 1,
+   "in_preview": 1,
+   "label": "Image",
+   "print_hide": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Active\nInactive\nSold Out\nDraft\nExpired\nEdit",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_wppm",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "etsy_shop",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Etsy Shop",
+   "options": "Etsy Shop",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_kmvr",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_bofe",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "views",
+   "fieldtype": "Int",
+   "label": "Views",
+   "non_negative": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_wmwp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "likes",
+   "fieldtype": "Int",
+   "label": "Likes",
+   "non_negative": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "settings_tab",
+   "fieldtype": "Tab Break",
+   "label": "Settings"
+  },
+  {
+   "fieldname": "item_section",
+   "fieldtype": "Section Break",
+   "label": "Item"
+  },
+  {
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "Item Name",
+   "length": 60,
+   "reqd": 1
+  },
+  {
+   "fieldname": "item_group",
+   "fieldtype": "Link",
+   "label": "Item Group",
+   "link_filters": "[[\"Item Group\",\"is_group\",\"=\",0]]",
+   "options": "Item Group",
+   "reqd": 1
+  },
+  {
+   "fieldname": "stock_uom",
+   "fieldtype": "Link",
+   "label": "Unit of Measure",
+   "options": "UOM",
+   "reqd": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "is_stock_item",
+   "fieldtype": "Check",
+   "label": "Maintain Stock"
+  },
+  {
+   "fieldname": "column_break_vwnc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "listing_tab",
+   "fieldtype": "Tab Break",
+   "label": "Details"
+  }
+ ],
+ "grid_page_length": 50,
+ "image_field": "image",
+ "in_create": 1,
+ "links": [
+  {
+   "link_doctype": "Item",
+   "link_fieldname": "etsy_listing"
+  },
+  {
+   "link_doctype": "Item Attribute",
+   "link_fieldname": "etsy_listing"
+  }
+ ],
+ "modified": "2026-02-02 11:47:02.414527",
+ "modified_by": "Administrator",
+ "module": "Etsy",
+ "name": "Etsy Listing",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "show_preview_popup": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [
+  {
+   "color": "Green",
+   "title": "Active"
+  },
+  {
+   "color": "Gray",
+   "title": "Inactive"
+  },
+  {
+   "color": "Red",
+   "title": "Sold Out"
+  },
+  {
+   "color": "Gray",
+   "title": "Draft"
+  },
+  {
+   "color": "Orange",
+   "title": "Expired"
+  },
+  {
+   "color": "Gray",
+   "title": "Edit"
+  }
+ ],
+ "title_field": "title"
+}

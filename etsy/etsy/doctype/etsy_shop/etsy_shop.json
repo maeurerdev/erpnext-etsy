@@ -1,0 +1,325 @@
+{
+ "actions": [],
+ "autoname": "field:shop_name",
+ "creation": "2026-01-12 07:36:45.052957",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "shop_name",
+  "column_break_ztwt",
+  "status",
+  "api_credentials_section",
+  "client_id",
+  "redirect_uri",
+  "use_localhost",
+  "column_break_hvsa",
+  "client_secret",
+  "code_verifier",
+  "connection_section",
+  "user_id",
+  "access_token",
+  "expires_in_datetime",
+  "expires_in",
+  "column_break_weka",
+  "shop_id",
+  "refresh_token",
+  "token_type",
+  "token_state",
+  "erp_settings_section",
+  "company",
+  "column_break_kiqp",
+  "language",
+  "sales_order_settings_section",
+  "sales_order_naming_series",
+  "sales_tax_account",
+  "shipping_tax_account",
+  "column_break_ftdq",
+  "sales_invoice_naming_series",
+  "bank_account_physical",
+  "bank_account_digital",
+  "customer_settings_section",
+  "customer_naming_series",
+  "customer_group",
+  "item_settings_section",
+  "item_group",
+  "stock_uom"
+ ],
+ "fields": [
+  {
+   "fieldname": "shop_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Shop Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "api_credentials_section",
+   "fieldtype": "Section Break",
+   "label": "API Credentials"
+  },
+  {
+   "description": "Keystring",
+   "fieldname": "client_id",
+   "fieldtype": "Data",
+   "label": "CLIENT_ID"
+  },
+  {
+   "fieldname": "column_break_hvsa",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Shared Secret",
+   "fieldname": "client_secret",
+   "fieldtype": "Password",
+   "label": "CLIENT_SECRET"
+  },
+  {
+   "fieldname": "redirect_uri",
+   "fieldtype": "Data",
+   "label": "Redirect URI",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "use_localhost",
+   "fieldtype": "Check",
+   "label": "Use localhost"
+  },
+  {
+   "fieldname": "code_verifier",
+   "fieldtype": "Data",
+   "label": "Code Verifier",
+   "read_only": 1
+  },
+  {
+   "fieldname": "connection_section",
+   "fieldtype": "Section Break",
+   "label": "Connection"
+  },
+  {
+   "fieldname": "access_token",
+   "fieldtype": "Password",
+   "label": "Access Token",
+   "read_only": 1
+  },
+  {
+   "fieldname": "refresh_token",
+   "fieldtype": "Password",
+   "label": "Refresh Token",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_weka",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "expires_in",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Expires In",
+   "read_only": 1
+  },
+  {
+   "depends_on": "access_token",
+   "fieldname": "token_type",
+   "fieldtype": "Data",
+   "label": "Token Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "token_state",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Token State",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_ztwt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Disconnected",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Disconnected\nConnected",
+   "read_only": 1
+  },
+  {
+   "fieldname": "user_id",
+   "fieldtype": "Data",
+   "label": "Etsy User ID",
+   "read_only": 1
+  },
+  {
+   "fieldname": "shop_id",
+   "fieldtype": "Data",
+   "label": "Etsy Shop ID",
+   "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "erp_settings_section",
+   "fieldtype": "Section Break",
+   "label": "ERP Settings"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "description": "'System Settings > Language' will be used if this is not set.",
+   "fieldname": "language",
+   "fieldtype": "Link",
+   "label": "Language",
+   "options": "Language"
+  },
+  {
+   "default": "EtsyUser-{ETSY_BUYER_ID}",
+   "description": "Naming Series for new Customers created by Etsy Integration.\nUse {ETSY_BUYER_ID} as placeholder for Etsy's Buyer UserID.\nERPnext standards for Naming Series like 'Etsy-.YYYY.-{ETSY_BUYER_ID}' can be used. Leave blank to use the default Naming Series of Customer Doctype.",
+   "fieldname": "customer_naming_series",
+   "fieldtype": "Data",
+   "label": "Customer Naming Series"
+  },
+  {
+   "description": "'Sellings Settings > Default Customer Group' will be used if this is not set.",
+   "fieldname": "customer_group",
+   "fieldtype": "Link",
+   "label": "Customer Group",
+   "options": "Customer Group"
+  },
+  {
+   "fieldname": "column_break_kiqp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "customer_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Customer Settings"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sales_order_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Sales Order & Invoice Settings"
+  },
+  {
+   "default": "EtsyOrder-{ETSY_ORDER_ID}",
+   "description": "Naming Series for new Sales Orders created by Etsy Integration.\nUse {ETSY_ORDER_ID} as placeholder for Etsy's Buyer UserID.\nERPnext standards for Naming Series like 'Etsy-.YYYY.-{ETSY_ORDER_ID}' can be used. Leave blank to use the default Naming Series of Sales Order Doctype.",
+   "fieldname": "sales_order_naming_series",
+   "fieldtype": "Data",
+   "label": "Sales Order Naming Series"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "item_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Item Settings"
+  },
+  {
+   "description": "'Stock Settings > Default Item Group' will be used if this is not set.",
+   "fieldname": "item_group",
+   "fieldtype": "Link",
+   "label": "Item Group",
+   "options": "Item Group"
+  },
+  {
+   "fieldname": "sales_tax_account",
+   "fieldtype": "Link",
+   "label": "Sales Tax Account",
+   "options": "Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "shipping_tax_account",
+   "fieldtype": "Link",
+   "label": "Shipping Tax Account",
+   "options": "Account",
+   "reqd": 1
+  },
+  {
+   "description": "Can also be defined per Listing",
+   "fieldname": "stock_uom",
+   "fieldtype": "Link",
+   "label": "Default Unit of Measure",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "column_break_ftdq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "EtsyInvoice-{ETSY_ORDER_ID}",
+   "description": "Naming Series for new Sales Invoices created by Etsy Integration.\nUse {ETSY_ORDER_ID} as placeholder for Etsy's Buyer UserID.\nERPnext standards for Naming Series like 'Etsy-.YYYY.-{ETSY_ORDER_ID}' can be used. Leave blank to use the default Naming Series of Sales Invoice Doctype.",
+   "fieldname": "sales_invoice_naming_series",
+   "fieldtype": "Data",
+   "label": "Sales Invoice Naming Series"
+  },
+  {
+   "depends_on": "access_token",
+   "fieldname": "expires_in_datetime",
+   "fieldtype": "Datetime",
+   "label": "Expires At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "bank_account_physical",
+   "fieldtype": "Link",
+   "label": "Bank Account for physical sales",
+   "options": "Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "bank_account_digital",
+   "fieldtype": "Link",
+   "label": "Bank Account for digital sales",
+   "options": "Account",
+   "reqd": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "links": [],
+ "modified": "2026-02-07 14:13:31.073151",
+ "modified_by": "Administrator",
+ "module": "Etsy",
+ "name": "Etsy Shop",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [
+  {
+   "color": "Gray",
+   "title": "Disconnected"
+  },
+  {
+   "color": "Green",
+   "title": "Connected"
+  }
+ ]
+}
