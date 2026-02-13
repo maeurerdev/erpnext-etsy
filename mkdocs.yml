@@ -1,0 +1,90 @@
+site_name: Etsy Integration for ERPNext
+site_url: https://maeurerdev.github.io/erpnext-etsy
+
+repo_name: maeurerdev/erpnext-etsy
+repo_url: https://github.com/maeurerdev/erpnext-etsy
+
+theme:
+  name: material
+
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.tracking
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+
+  icon:
+    repo: simple/github
+
+  palette:
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep-orange
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep-orange
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Prerequisites & Installation: getting-started/installation.md
+    - Setup Your First Etsy Shop: getting-started/setup-shop.md
+    - Connect to Etsy API: getting-started/connect-api.md
+    - First Import & Next Steps: getting-started/next-steps.md
+  - User Guide:
+    - Shop Configuration: user-guide/shop-configuration.md
+    - Listings & Items: user-guide/listings-and-items.md
+    - Orders & Customers: user-guide/orders-and-customers.md
+    - Synchronization: user-guide/synchronization.md
+    - Custom Fields & Data Mapping: user-guide/custom-fields.md
+    - Multi-Shop Setup: user-guide/multi-shop.md
+    - Limitations: user-guide/limitations.md
+    - Troubleshooting: user-guide/troubleshooting.md
+  - Developer Guide:
+    - Contributing: developer-guide/contributing.md
+
+extra_javascript:
+  - javascripts/extra.js
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - admonition
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - md_in_html
+  - tables
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - toc:
+      permalink: true
