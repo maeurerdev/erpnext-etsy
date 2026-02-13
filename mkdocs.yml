@@ -48,15 +48,25 @@ theme:
 
 nav:
   - Home: index.md
-  - Getting Started: getting-started.md
+  - Getting Started:
+    - Prerequisites & Installation: getting-started/installation.md
+    - Setup Your First Etsy Shop: getting-started/setup-shop.md
+    - Connect to Etsy API: getting-started/connect-api.md
+    - First Import & Next Steps: getting-started/next-steps.md
   - User Guide:
-    - Features: features.md
-    - Configuration: configuration.md
-    - Synchronization: synchronization.md
-    - Troubleshooting: troubleshooting.md
+    - Shop Configuration: user-guide/shop-configuration.md
+    - Listings & Items: user-guide/listings-and-items.md
+    - Orders & Customers: user-guide/orders-and-customers.md
+    - Synchronization: user-guide/synchronization.md
+    - Custom Fields & Data Mapping: user-guide/custom-fields.md
+    - Multi-Shop Setup: user-guide/multi-shop.md
+    - Limitations: user-guide/limitations.md
+    - Troubleshooting: user-guide/troubleshooting.md
   - Developer Guide:
-    - API Reference: api-reference.md
-    - Development: development.md
+    - Contributing: developer-guide/contributing.md
+
+extra_javascript:
+  - javascripts/extra.js
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -73,5 +83,8 @@ markdown_extensions:
   - attr_list
   - md_in_html
   - tables
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - toc:
       permalink: true

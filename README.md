@@ -1,5 +1,12 @@
 # Etsy Integration for ERPNext
+
+> [!IMPORTANT]
+> The term 'Etsy' is a trademark of Etsy, Inc. This application uses the Etsy API but is not endorsed or certified by Etsy, Inc.
+
 [![ERPNext](https://img.shields.io/badge/ERPNext-v15-blue)](https://github.com/frappe/erpnext)
+
+**📖 [Read the full documentation](https://maeurerdev.github.io/erpnext-etsy)**
+
 
 ## 🌟 Features
 - ✅ **Sales Order Synchronization**  

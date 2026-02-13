@@ -2,15 +2,6 @@
 
 This page explains how data synchronization works between Etsy and ERPNext.
 
-## Sync Overview
-
-The Etsy Integration supports two types of synchronization:
-
-1. **Manual Sync**: On-demand import via buttons in Etsy Shop doctype
-2. **Automatic Sync**: Scheduled background jobs configured in Etsy Settings
-
-Both types use the same underlying import methods, ensuring consistent behavior.
-
 ## Sync Direction
 
 The integration is **one-way**: Etsy → ERPNext
@@ -29,7 +20,6 @@ Trigger imports manually using buttons in the Etsy Shop doctype.
 
 **Button**: `Import Listings`
 
-**What It Does**:
 1. Fetches all active listings from Etsy for this shop
 2. For each listing:
    - Creates or updates an Etsy Listing document
@@ -43,15 +33,10 @@ Trigger imports manually using buttons in the Etsy Shop doctype.
 - When product details change (pricing, descriptions, images)
 - Periodically to ensure ERPNext has the latest listing data
 
-**API Calls**:
-- `GET /v3/application/shops/{shop_id}/listings`
-- `GET /v3/application/listings/{listing_id}/inventory` (per listing)
-
 ### Import Receipts
 
 **Button**: `Import Receipts`
 
-**What It Does**:
 1. Fetches recent receipts (orders) from Etsy for this shop
 2. For each receipt:
    - Creates or matches a Customer based on `etsy_customer_id`
@@ -66,19 +51,10 @@ Trigger imports manually using buttons in the Etsy Shop doctype.
 - To catch up on recent orders
 - Before automatic sync is enabled
 
-**API Calls**:
-- `GET /v3/application/shops/{shop_id}/receipts` (paginated)
-- `GET /v3/application/shops/{shop_id}/receipts/{receipt_id}/transactions` (per receipt)
-
-**Filters Applied**:
-- Only fetches receipts updated since the last sync
-- Sorts by `updated` timestamp descending
-
 ### Import Historic Receipts
 
 **Button**: `Import Historic Receipts`
 
-**What It Does**:
 1. Opens a dialog prompting for a "From Date"
 2. Fetches all receipts from that date to now
 3. Processes each receipt the same as "Import Receipts"
@@ -89,55 +65,48 @@ Trigger imports manually using buttons in the Etsy Shop doctype.
 - Gap filling: If sync was disabled for a period
 - Migration: Bringing historical data into ERPNext
 
-**API Calls**:
-- `GET /v3/application/shops/{shop_id}/receipts?min_created={timestamp}` (paginated)
-
-**Pagination**:
-- Etsy API returns up to 100 receipts per page
-- The app automatically fetches all pages using the `offset` parameter
-
 ## Automatic Synchronization
 
 Configure scheduled background jobs in Etsy Settings to automate syncing.
 
-### How It Works
+### Etsy Settings Configuration
 
-1. **Enable Sync**: Check "Enable Synchronisation" in Etsy Settings
-2. **Set Intervals**: Configure sync intervals for Sales Orders and Items
-3. **Save**: Etsy Settings creates/updates Scheduled Job Type documents
-4. **Scheduler Runs**: ERPNext's background scheduler executes jobs based on cron expressions
+The **Etsy Settings** doctype is a singleton that controls automatic synchronization schedules.
 
-### Scheduled Job Types
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| **Enable Synchronisation** | Check | Unchecked | Master switch to enable/disable all automatic syncing. |
 
-Two Scheduled Job Types are created:
+When disabled, all scheduled sync jobs are stopped. You can still manually import data via Etsy Shop buttons.
 
-#### 1. Sales Order Sync Job
+#### Sales Order Synchronization
 
-- **Function**: `etsy.api.synchronise_receipts`
-- **Frequency**: Based on "Sales Order Sync Interval" (1-60 minutes)
-- **Cron Example**: `*/5 * * * *` (every 5 minutes)
-- **Job Type**: `Cron`
+| Field | Type | Range | Default | Description |
+|-------|------|-------|---------|-------------|
+| **Sync Interval** | Int | 1-60 minutes | 5 | How often to sync orders. Set to `0` to disable. |
+| **Last Sync** | Datetime | Read-only | - | Timestamp of last successful sync. |
+| **Next Sync** | Datetime | Read-only | - | When the next sync will run. |
+| **Scheduler Link** | Link | Read-only | - | Link to the Scheduled Job Type document. |
 
-**What It Does**:
-- Loops through all Etsy Shops with status = "Connected"
-- Calls `import_receipts()` on each shop
-- Logs errors per shop without stopping the entire job
+#### Item Synchronization
 
-#### 2. Item Sync Job
+| Field | Type | Range | Default | Description |
+|-------|------|-------|---------|-------------|
+| **Sync Interval** | Int | 1-24 hours | 24 | How often to sync listings. Set to `0` to disable. |
+| **Last Sync** | Datetime | Read-only | - | Timestamp of last successful sync. |
+| **Next Sync** | Datetime | Read-only | - | When the next sync will run. |
+| **Scheduler Link** | Link | Read-only | - | Link to the Scheduled Job Type document. |
 
-- **Function**: `etsy.api.synchronise_listings`
-- **Frequency**: Based on "Item Sync Interval" (1-24 hours)
-- **Cron Example**: `0 */24 * * *` (every 24 hours)
-- **Job Type**: `Cron`
+### How Scheduled Jobs Work
 
-**What It Does**:
-- Loops through all Etsy Shops with status = "Connected"
-- Calls `import_listings()` on each shop
-- Logs errors per shop without stopping the entire job
+When you save Etsy Settings with synchronization enabled:
 
-### Cron Expression Calculation
+1. The app creates or updates **Scheduled Job Type** documents
+2. Cron expressions are generated based on your interval settings
+3. ERPNext Scheduler automatically runs these jobs in the background
+4. Each job syncs data for all connected Etsy Shops
 
-The app converts your interval settings to cron expressions:
+**Cron Calculation Examples:**
 
 | Interval | Cron Expression | Meaning |
 |----------|-----------------|---------|
@@ -146,6 +115,33 @@ The app converts your interval settings to cron expressions:
 | 1 hour | `0 * * * *` | Every hour at minute 0 |
 | 6 hours | `0 */6 * * *` | Every 6 hours |
 | 24 hours | `0 */24 * * *` | Every 24 hours |
+
+!!! tip "Performance Consideration"
+    Sales orders change frequently, so a 5-minute interval is reasonable. Listings change less often, so 24 hours is sufficient for most shops.
+
+### Scheduled Job Types
+
+Two Scheduled Job Types are created:
+
+#### Sales Order Sync Job
+
+- **Function**: `etsy.api.synchronise_receipts`
+- **Frequency**: Based on "Sales Order Sync Interval" (1-60 minutes)
+- **Cron Example**: `*/5 * * * *` (every 5 minutes)
+
+Loops through all Etsy Shops with status = "Connected", calls `import_receipts()` on each, and logs errors per shop without stopping the entire job.
+
+#### Item Sync Job
+
+- **Function**: `etsy.api.synchronise_listings`
+- **Frequency**: Based on "Item Sync Interval" (1-24 hours)
+- **Cron Example**: `0 */24 * * *` (every 24 hours)
+
+Loops through all Etsy Shops with status = "Connected", calls `import_listings()` on each, and logs errors per shop without stopping the entire job.
+
+![Scheduled Job Type](../images/features-scheduled-job-type.png)
+
+<!-- IMAGE: Screenshot of a Scheduled Job Type document (e.g., "Etsy: Sync Sales Orders") showing the job name, method (etsy.api.synchronise_receipts), "Cron Format" field (e.g., */5 * * * *), "Stopped" checkbox unchecked, and "Last Execution" timestamp -->
 
 ### Disabling Sync
 
@@ -163,7 +159,7 @@ When disabled, Scheduled Job Types are updated with `stopped = 1`, preventing fu
 - **Next Sync**: Shows when the job will run next
 - **Scheduler Link**: Direct link to the Scheduled Job Type
 
-![Monitoring in Etsy Settings](images/sync-monitoring-settings.png)
+![Monitoring in Etsy Settings](../images/sync-monitoring-settings.png)
 
 <!-- IMAGE: Screenshot of Etsy Settings with sync enabled, showing populated "Last Sync" and "Next Sync" timestamps, and clickable "Scheduler Link" fields for both Sales Order and Item sync sections -->
 
@@ -172,7 +168,7 @@ When disabled, Scheduled Job Types are updated with `stopped = 1`, preventing fu
 - Check **Last Execution** timestamp
 - View execution logs
 
-![Scheduled Job Execution](images/sync-scheduled-job-execution.png)
+![Scheduled Job Execution](../images/sync-scheduled-job-execution.png)
 
 <!-- IMAGE: Screenshot of a Scheduled Job Type document showing execution details: "Last Execution" timestamp, execution status, and potentially a "View Logs" section or similar monitoring info -->
 
@@ -202,14 +198,18 @@ The integration uses unique custom fields to prevent duplicate records:
 ### Update Logic
 
 #### Listings
+
 When re-importing a listing:
+
 - **Etsy Listing**: Title, description, image, status, views, likes updated
 - **Items**: Name, description, pricing updated
 - **Item Variants**: New variants added; existing variants updated
 - **Item Attributes**: New values added to attributes
 
 #### Receipts
+
 When re-importing a receipt:
+
 - If the Sales Order already exists (matched by `etsy_order_id`), it's **skipped**
 - Orders are not updated after initial creation
 - Subsequent changes on Etsy (e.g., address updates) require manual ERPNext edits
@@ -234,6 +234,7 @@ for receipt in receipts:
 ```
 
 This ensures:
+
 - One bad record doesn't stop the entire sync
 - Each record is atomic (all-or-nothing)
 - Errors are logged for later review
@@ -247,6 +248,7 @@ To respect Etsy's API rate limits:
 - **Applies To**: Paginated requests (listing inventory, receipts)
 
 **Etsy Rate Limits** (as of API v3):
+
 - 10 requests per second per OAuth token
 - The 250ms delay ensures ~4 requests/second, well within limits
 
@@ -254,18 +256,16 @@ To respect Etsy's API rate limits:
 
 Etsy API returns results in pages. The integration handles this automatically.
 
-#### Pagination Parameters
 - `limit`: Number of records per page (default: 100)
 - `offset`: Starting position for the page (default: 0)
 
-#### Example Flow
+**Example Flow**:
+
 1. Request: `GET /receipts?limit=100&offset=0` → Returns 100 receipts
 2. Request: `GET /receipts?limit=100&offset=100` → Returns next 100 receipts
 3. Continue until API returns fewer than 100 receipts (last page)
 
-**Implementation**: `EtsyAPI.fetch_all()` method in `api.py`
-
-## Sync Performance
+## Performance
 
 ### Factors Affecting Performance
 
@@ -277,25 +277,17 @@ Etsy API returns results in pages. The integration handles this automatically.
 
 ### Optimization Tips
 
-#### For High-Volume Shops
+**For High-Volume Shops**:
+
 - **Increase sync interval**: Use 10-15 minutes for Sales Orders instead of 5
 - **Stagger schedules**: If managing multiple shops, offset their sync times
 - **Historical imports**: Run during off-peak hours
 
-#### For Performance Monitoring
+**For Performance Monitoring**:
+
 - **Enable RQ (Redis Queue)**: Use ERPNext's background job system for better performance
 - **Monitor Error Log**: Check for recurring errors that slow down sync
 - **Database Indexing**: Ensure custom fields (`etsy_*`) are indexed
-
-### Expected Sync Times
-
-Approximate times (varies by server and network):
-
-| Operation | Record Count | Estimated Time |
-|-----------|--------------|----------------|
-| Import Listings | 100 listings | 2-5 minutes |
-| Import Receipts | 100 orders | 3-7 minutes |
-| Historic Import | 1000 orders | 20-40 minutes |
 
 !!! info "Background Processing"
     Syncs run in the background via ERPNext Scheduler. They don't block your UI or other operations.
@@ -329,55 +321,3 @@ Adjust based on your shop's order volume and operational needs.
 | **Error Visibility** | Immediate feedback | Check Error Log |
 
 **Best Practice**: Use manual sync during setup and testing, then enable automatic sync for production.
-
-## Troubleshooting Sync Issues
-
-### Sync Not Running
-
-**Check**:
-1. Is "Enable Synchronisation" checked in Etsy Settings?
-2. Is the sync interval set to a value > 0?
-3. Are Scheduled Job Types active (not stopped)?
-4. Is ERPNext Scheduler enabled? (Check `site_config.json` for `scheduler_enabled`)
-
-**Solution**:
-- Enable the scheduler: `bench --site [site-name] set-config scheduler_enabled 1`
-- Restart bench: `bench restart`
-
-### Duplicate Records
-
-**Symptom**: Multiple customers/orders for the same Etsy buyer/receipt
-
-**Cause**: Custom field `etsy_*_id` not unique or not set correctly
-
-**Solution**:
-- Verify custom fields are created: `bench console` → `frappe.get_all("Custom Field", filters={"fieldname": ["like", "etsy_%"]})`
-- Re-run `after_install()`: `bench console` → `from etsy.install import after_install; after_install()`
-
-### Orders Not Importing
-
-**Symptom**: Sync runs but no Sales Orders created
-
-**Check**:
-1. Are there new orders on Etsy?
-2. Check Error Log for import errors
-3. Verify Etsy Shop is "Connected"
-
-**Common Errors**:
-- Missing Item: Import listing first
-- Invalid Tax Account: Check configuration in Etsy Shop
-
-### Slow Sync
-
-**Symptom**: Sync takes a long time or times out
-
-**Solutions**:
-- Reduce sync interval to avoid large backlogs
-- Import historical data in smaller date ranges
-- Increase timeout in site_config.json: `"job_timeout": 1800`
-
-## Next Steps
-
-- **[Troubleshooting](troubleshooting.md)** - Detailed troubleshooting guide
-- **[API Reference](api-reference.md)** - Technical API details
-- **[Development](development.md)** - Contribute to the project

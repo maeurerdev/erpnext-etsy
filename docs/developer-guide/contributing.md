@@ -1,4 +1,4 @@
-# Development
+# Contributing
 
 This guide covers development setup, code style, testing, and contributing to the Etsy Integration project.
 
@@ -57,7 +57,7 @@ Run hooks manually:
 pre-commit run --all-files
 ```
 
-### Development Commands
+## Development Commands
 
 Navigate to your bench directory for all commands:
 
@@ -65,7 +65,7 @@ Navigate to your bench directory for all commands:
 cd /workspace/development/frappe-bench
 ```
 
-#### Install/Uninstall App
+### Install/Uninstall App
 
 ```bash
 # Install
@@ -75,7 +75,7 @@ bench --site development.localhost install-app etsy
 bench --site development.localhost uninstall-app etsy --no-backup
 ```
 
-#### Run Tests
+### Run Tests
 
 ```bash
 # Run all tests for the app
@@ -84,11 +84,17 @@ bench run-tests --app etsy
 # Run a specific test module
 bench run-tests --app etsy --module etsy.etsy.doctype.etsy_shop.test_etsy_shop
 
-# Run with coverage
+# Run a specific test class
+bench run-tests --app etsy --test TestEtsyShop
+
+# With verbose output
+bench run-tests --app etsy --verbose
+
+# With coverage report
 bench run-tests --app etsy --coverage
 ```
 
-#### Build Assets
+### Build Assets
 
 ```bash
 # Build all assets
@@ -98,7 +104,7 @@ bench build --app etsy
 bench watch
 ```
 
-#### Run Linters
+### Run Linters
 
 ```bash
 # Run all pre-commit hooks
@@ -111,7 +117,7 @@ ruff check etsy/
 ruff check --fix etsy/
 ```
 
-#### Database Migrations
+### Database Migrations
 
 After changing doctype schemas:
 
@@ -119,7 +125,7 @@ After changing doctype schemas:
 bench migrate
 ```
 
-#### Console Access
+### Console Access
 
 For debugging and testing:
 
@@ -144,9 +150,8 @@ The project follows strict code style guidelines enforced by linters.
 
 **Linter:** Ruff
 
-**Configuration:** `.ruff.toml` or `pyproject.toml`
-
 **Rules:**
+
 - **Indentation:** Tabs
 - **Quotes:** Double quotes
 - **Line Length:** 110 characters
@@ -178,9 +183,8 @@ def example_function(param1: str, param2: int) -> dict:
 
 **Linter:** ESLint + Prettier
 
-**Configuration:** `.eslintrc.json` and `.prettierrc`
-
 **Rules:**
+
 - **Indentation:** Tabs (size 4)
 - **Quotes:** Double quotes preferred
 - **Target:** ES2022
@@ -274,25 +278,6 @@ class TestEtsyShop(unittest.TestCase):
 		self.assertEqual(header["Authorization"], "Bearer test_token")
 ```
 
-### Running Tests
-
-```bash
-# All tests
-bench run-tests --app etsy
-
-# Specific test
-bench run-tests --app etsy --module etsy.etsy.doctype.etsy_shop.test_etsy_shop
-
-# Specific test class
-bench run-tests --app etsy --test TestEtsyShop
-
-# With verbose output
-bench run-tests --app etsy --verbose
-
-# With coverage report
-bench run-tests --app etsy --coverage
-```
-
 ### Mocking External APIs
 
 For testing API interactions without hitting Etsy:
@@ -321,9 +306,7 @@ class TestEtsyAPI(unittest.TestCase):
 		self.assertEqual(result.user_id, 12345)
 ```
 
-## Contributing
-
-### Contribution Workflow
+## Contributing Workflow
 
 1. **Fork the Repository**
    - Fork on GitHub: [maeurerdev/erpnext-etsy](https://github.com/maeurerdev/erpnext-etsy)
@@ -367,6 +350,7 @@ Follow conventional commits:
 **Format:** `type(scope): description`
 
 **Types:**
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `docs`: Documentation changes
@@ -386,6 +370,7 @@ test(shop): Add OAuth flow tests
 ### Pull Request Guidelines
 
 **Good PR:**
+
 - Clear, descriptive title
 - Detailed description of changes
 - References related issues (#123)
@@ -486,118 +471,48 @@ For frontend debugging:
 3. Use Network tab to inspect API calls
 4. Use Sources tab to debug JavaScript
 
-## Architecture Decisions
+### Test API Connection
 
-### Why Pydantic?
-
-- **Type Safety**: Validates API responses at runtime
-- **Auto Documentation**: Models serve as documentation
-- **IDE Support**: Better autocomplete and type hints
-- **Serialization**: Easy conversion to/from JSON
-
-### Why One-Way Sync?
-
-- **Simplicity**: Avoids complex conflict resolution
-- **Safety**: Prevents accidental overwrites on Etsy
-- **Etsy as Source**: Etsy remains the authoritative source
-
-### Why Per-Record Error Handling?
-
-- **Resilience**: One bad record doesn't stop entire sync
-- **Auditability**: Each error is logged individually
-- **Recovery**: Failed records can be retried independently
-
-### Why Rate Limiting?
-
-- **Respect API Limits**: Etsy has rate limits
-- **Avoid Bans**: Excessive requests can lead to temporary bans
-- **Politeness**: Good API citizenship
-
-## Release Process
-
-### Version Numbering
-
-Follow Semantic Versioning (SemVer):
-
-- **MAJOR**: Breaking changes
-- **MINOR**: New features (backward compatible)
-- **PATCH**: Bug fixes
-
-Example: `1.2.3`
-
-### Creating a Release
-
-1. **Update Version**
-   - Update version in `setup.py`
-   - Update version in `hooks.py` (if applicable)
-
-2. **Update Changelog**
-   - Document all changes since last release
-   - Categorize: Added, Changed, Fixed, Removed
-
-3. **Tag Release**
-   ```bash
-   git tag -a v1.2.3 -m "Release version 1.2.3"
-   git push origin v1.2.3
-   ```
-
-4. **GitHub Release**
-   - Create release on GitHub
-   - Attach changelog
-   - Publish
-
-### Changelog Format
-
-```markdown
-## [1.2.3] - 2026-02-12
-
-### Added
-- New feature X
-- Support for Y
-
-### Changed
-- Improved Z
-
-### Fixed
-- Bug in A
-- Issue with B
-
-### Removed
-- Deprecated feature C
+```bash
+bench --site [site-name] console
+```
+```python
+from etsy.api import EtsyAPI
+shop = frappe.get_doc("Etsy Shop", "Your Shop Name")
+api = EtsyAPI(shop)
+print(api.get("/application/users/me"))  # Should return user data
+exit()
 ```
 
-## Resources
+### Check Database State
 
-### Documentation
-- **Frappe Framework**: [frappeframework.com/docs](https://frappeframework.com/docs)
-- **ERPNext**: [docs.erpnext.com](https://docs.erpnext.com)
-- **Etsy API**: [developer.etsy.com](https://developer.etsy.com)
-- **Pydantic**: [docs.pydantic.dev](https://docs.pydantic.dev)
+```bash
+bench --site [site-name] mariadb
+```
+```sql
+-- Count Etsy-related records
+SELECT COUNT(*) FROM `tabCustomer` WHERE etsy_customer_id IS NOT NULL;
+SELECT COUNT(*) FROM `tabSales Order` WHERE etsy_order_id IS NOT NULL;
+SELECT COUNT(*) FROM `tabEtsy Listing`;
+exit;
+```
 
-### Community
-- **Frappe Forum**: [discuss.frappe.io](https://discuss.frappe.io)
-- **GitHub Issues**: [github.com/maeurerdev/erpnext-etsy/issues](https://github.com/maeurerdev/erpnext-etsy/issues)
-- **ERPNext Community**: [community.erpnext.com](https://community.erpnext.com)
+### Review Scheduled Jobs
 
-### Tools
-- **Ruff**: [docs.astral.sh/ruff](https://docs.astral.sh/ruff)
-- **Pre-commit**: [pre-commit.com](https://pre-commit.com)
-- **MkDocs**: [mkdocs.org](https://mkdocs.org)
-- **Material for MkDocs**: [squidfunk.github.io/mkdocs-material](https://squidfunk.github.io/mkdocs-material)
-
-## License
-
-This project is licensed under the GNU General Public License v3 (GPL-3.0).
-
-### GPL-3.0 Summary
-
-- **Freedom to Use**: Use the software for any purpose
-- **Freedom to Study**: Access and study the source code
-- **Freedom to Modify**: Modify the software
-- **Freedom to Distribute**: Share copies and modifications
-- **Copyleft**: Derivative works must also be GPL-3.0
-
-See the [LICENSE](https://github.com/maeurerdev/erpnext-etsy/blob/main/LICENSE) file for full details.
+```bash
+bench --site [site-name] console
+```
+```python
+import frappe
+jobs = frappe.get_all("Scheduled Job Log",
+                       filters={"scheduled_job_type": ["like", "%etsy%"]},
+                       fields=["name", "status", "creation"],
+                       order_by="creation desc",
+                       limit=10)
+for job in jobs:
+    print(f"{job.creation}: {job.status}")
+exit()
+```
 
 ## Getting Help
 
@@ -607,30 +522,9 @@ Report issues on GitHub:
 [https://github.com/maeurerdev/erpnext-etsy/issues](https://github.com/maeurerdev/erpnext-etsy/issues)
 
 **Include:**
+
 - ERPNext version
 - App version (commit hash)
 - Detailed error messages
 - Steps to reproduce
 - Expected vs. actual behavior
-
-### Feature Requests
-
-Open a feature request on GitHub Issues:
-
-**Template:**
-- **Problem**: What problem does this solve?
-- **Solution**: Proposed solution
-- **Alternatives**: Other approaches considered
-- **Use Case**: Specific use case
-
-### Discussion
-
-For general discussion:
-- **Frappe Forum**: Tag with "etsy" and "integration"
-- **GitHub Discussions**: (if enabled)
-
-## Next Steps
-
-- **[API Reference](api-reference.md)** - Technical API documentation
-- **[Troubleshooting](troubleshooting.md)** - Common issues and solutions
-- **[Configuration](configuration.md)** - Detailed configuration guide

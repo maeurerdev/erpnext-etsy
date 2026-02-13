@@ -92,7 +92,7 @@ This guide helps you diagnose and resolve common issues with the Etsy Integratio
    - Search for "Etsy" or filter by today's date
    - Review error messages
 
-![Error Log with Etsy Errors](images/troubleshoot-error-log.png)
+![Error Log with Etsy Errors](../images/troubleshoot-error-log.png)
 
 <!-- IMAGE: Screenshot of Error Log list filtered/searched for "Etsy" showing one or more error entries with titles like "Etsy Import Error" and timestamps -->
 
@@ -227,7 +227,7 @@ This guide helps you diagnose and resolve common issues with the Etsy Integratio
      - "Stopped" is unchecked
      - "Cron Format" is set correctly
 
-![Scheduled Job Type Troubleshooting](images/troubleshoot-scheduled-job.png)
+![Scheduled Job Type Troubleshooting](../images/troubleshoot-scheduled-job.png)
 
 <!-- IMAGE: Screenshot of a Scheduled Job Type document showing the "Stopped" checkbox (should be unchecked for active jobs), "Cron Format" field with a cron expression, and "Last Execution" timestamp to verify it's running -->
 
@@ -410,7 +410,7 @@ exit()
    - Go to: Customization > Custom Field
    - Create fields as defined in `hooks.py`
 
-![Custom Field List](images/troubleshoot-custom-fields.png)
+![Custom Field List](../images/troubleshoot-custom-fields.png)
 
 <!-- IMAGE: Screenshot of Custom Field list view filtered by "etsy" showing all etsy_* custom fields with columns: Field Name, DocType (Customer, Sales Order, Item, etc.), Label -->
 
@@ -508,68 +508,6 @@ exit()
 3. **Disable SSL Verification** (not recommended for production):
    - Only as a last resort and temporary fix
 
-## Debugging Tips
-
-### Enable Verbose Logging
-
-```bash
-bench --site [site-name] console
-```
-```python
-import frappe
-frappe.set_value("System Settings", None, "enable_frappe_logger", 1)
-frappe.db.commit()
-exit()
-```
-
-Check logs:
-```bash
-tail -f logs/[site-name].log
-```
-
-### Test API Connection
-
-```bash
-bench --site [site-name] console
-```
-```python
-from etsy.api import EtsyAPI
-shop = frappe.get_doc("Etsy Shop", "Your Shop Name")
-api = EtsyAPI(shop)
-print(api.get("/application/users/me"))  # Should return user data
-exit()
-```
-
-### Check Database State
-
-```bash
-bench --site [site-name] mariadb
-```
-```sql
--- Count Etsy-related records
-SELECT COUNT(*) FROM `tabCustomer` WHERE etsy_customer_id IS NOT NULL;
-SELECT COUNT(*) FROM `tabSales Order` WHERE etsy_order_id IS NOT NULL;
-SELECT COUNT(*) FROM `tabEtsy Listing`;
-exit;
-```
-
-### Review Scheduled Jobs
-
-```bash
-bench --site [site-name] console
-```
-```python
-import frappe
-jobs = frappe.get_all("Scheduled Job Log",
-                       filters={"scheduled_job_type": ["like", "%etsy%"]},
-                       fields=["name", "status", "creation"],
-                       order_by="creation desc",
-                       limit=10)
-for job in jobs:
-    print(f"{job.creation}: {job.status}")
-exit()
-```
-
 ## Getting Help
 
 If you've tried the solutions above and still have issues:
@@ -595,9 +533,3 @@ If you've tried the solutions above and still have issues:
 4. **Frappe Community**:
    - Post on [Frappe Forum](https://discuss.frappe.io/)
    - Tag with "etsy" and "integration"
-
-## Next Steps
-
-- **[API Reference](api-reference.md)** - Technical API documentation
-- **[Development](development.md)** - Contributing to the project
-- **[Configuration](configuration.md)** - Review configuration options
