@@ -247,7 +247,7 @@ after_uninstall = "etsy.install.after_uninstall"
 # Testing
 # -------
 
-# before_tests = "etsy.install.before_tests"
+before_tests = "etsy.install.before_tests"
 
 # Overriding Methods
 # ------------------------------

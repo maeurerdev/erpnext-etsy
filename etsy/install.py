@@ -2,6 +2,27 @@ import frappe
 from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 
 
+def before_tests():
+    """Ensure ERPNext fixtures required by test record preloading exist.
+
+    The Frappe test framework preloads test records for linked doctypes.
+    Etsy Shop links to Company, and Company.on_update() creates default
+    warehouses including one with warehouse_type='Transit'. This Warehouse
+    Type is normally created by ERPNext's Setup Wizard (install_fixtures),
+    which does not run in CI — only after_install() runs. So we create
+    the missing fixture here.
+    """
+    _ensure_warehouse_types()
+
+
+def _ensure_warehouse_types():
+    warehouse_types = ["Transit"]
+    for wt in warehouse_types:
+        if not frappe.db.exists("Warehouse Type", wt):
+            frappe.get_doc({"doctype": "Warehouse Type", "name": wt}).insert(ignore_permissions=True)
+    frappe.db.commit()
+
+
 def after_install():
     for key, value in frappe.get_hooks("etsy_custom_fields", {}).items():
         if isinstance(key, tuple):
