@@ -4,11 +4,11 @@ name: CI
 on:
   push:
     branches:
-      - develop
+      - main
   pull_request:
 
 concurrency:
-  group: develop-etsy-${{ github.event.number }}
+  group: erpnext-etsy-${{ github.event.number }}
   cancel-in-progress: true
 
 jobs:
@@ -30,17 +30,17 @@ jobs:
 
     steps:
       - name: Clone
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
-          python-version: '3.14'
+          python-version: '3.11'
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 24
+          node-version: 20.20
           check-latest: true
 
       - name: Add to Hosts
