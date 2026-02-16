@@ -6,7 +6,7 @@ import secrets
 import hashlib
 
 from requests_oauthlib import OAuth2Session
-from urllib.parse import urlencode, urljoin
+from urllib.parse import urlencode, urljoin, quote_plus, unquote_plus
 
 import pytz
 import datetime
@@ -50,7 +50,7 @@ class EtsyShop(Document):
 		if self.use_localhost:
 			splt = base_url.split(":")
 			base_url = f"{splt[0]}://localhost:{splt[-1]}"
-		callback_path = f"/api/method/etsy.etsy.doctype.etsy_shop.etsy_shop.callback/{self.name}"
+		callback_path = f"/api/method/etsy.etsy.doctype.etsy_shop.etsy_shop.callback/{quote_plus(self.name)}"
 		self.redirect_uri = urljoin(base_url, callback_path)
 	
 	### public
@@ -513,7 +513,7 @@ def callback(code=None, state=None):
 	if len(path) != 4 or not path[3]:
 		frappe.throw(_("Invalid Parameters."))
 
-	etsy_shop:EtsyShop = frappe.get_doc("Etsy Shop", path[3])
+	etsy_shop:EtsyShop = frappe.get_doc("Etsy Shop", unquote_plus(path[3]))
 
 	if state != etsy_shop.token_state:
 		frappe.throw(_("Invalid token state! Check if the token has been created by the OAuth flow."))
