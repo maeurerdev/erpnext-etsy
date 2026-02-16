@@ -6,7 +6,7 @@ frappe.ui.form.on("Etsy Shop", {
 			if (frm.doc.status === 'Disconnected') {
 				frm.add_custom_button(__("Login with {} on Etsy", [frm.doc.shop_name]), async () => {
 					if (frm.is_dirty()) {
-						frappe.show_alert('Please save before logging in!');
+						frappe.show_alert(__('Please save before logging in!'));
 					} else {
 						frappe.call({
 							method: "initiate_web_application_flow",
@@ -18,29 +18,29 @@ frappe.ui.form.on("Etsy Shop", {
 					}
 				});
 			} else if (frm.doc.status === 'Connected') {
-				frm.add_custom_button("Etsy Listings", async () => {
+				frm.add_custom_button(__("Etsy Listings"), async () => {
 					frappe.prompt([
 							{
-								label: 'Etsy Listing State',
+								label: __('Etsy Listing State'),
 								fieldname: 'listing_state',
 								fieldtype: 'Select',
 								options: ['all', 'active', 'inactive', 'draft', 'sold_out', 'expired'],
 								default: 'all',
-								description: 'Listings with the selected state will be imported or updated.'
+								description: __('Listings with the selected state will be imported or updated.')
 							},
 							{
-								label: 'include Attributes',
+								label: __('Include Attributes'),
 								fieldname: 'include_attributes',
 								fieldtype: 'Check',
 								default: 1,
-								description: 'Also create or update Item Attributes of the selected Listings.'
+								description: __('Also create or update Item Attributes of the selected Listings.')
 							},
 							{
-								label: 'include Items',
+								label: __('Include Items'),
 								fieldname: 'include_items',
 								fieldtype: 'Check',
 								default: 0,
-								description: 'Also create or update Items & Variants of the selected Listings.'
+								description: __('Also create or update Items & Variants of the selected Listings.')
 							}
 						], (values) => {
 							frappe.call({
@@ -65,14 +65,14 @@ frappe.ui.form.on("Etsy Shop", {
 								}
 							});
 						},
-						'Import Etsy Listings',
-						'Import'
+						__('Import Etsy Listings'),
+						__('Import')
 					)
 				}, 'Import');
-				frm.add_custom_button("Sales History", async () => {
+				frm.add_custom_button(__("Sales History"), async () => {
 					frappe.prompt([
 							{
-								label: 'From',
+								label: __('From', context='date'),
 								fieldname: 'min_date',
 								fieldtype: 'Date',
 								default: `${new Date().getFullYear()}-01-01`
@@ -82,7 +82,7 @@ frappe.ui.form.on("Etsy Shop", {
 								fieldtype: 'Column Break'
 							},
 							{
-								label: 'To',
+								label: __('To', context='date'),
 								fieldname: 'max_date',
 								fieldtype: 'Date',
 								default: frappe.datetime.nowdate()
@@ -116,13 +116,13 @@ frappe.ui.form.on("Etsy Shop", {
 								});
 							}
 						},
-						'Import Sales History',
-						'Import'
+						__('Import Sales History'),
+						__('Import')
 					)
 				}, 'Import');
 
-				frm.add_custom_button("Disconnect", async () => {
-					frappe.warn('Are you sure you want to proceed?',
+				frm.add_custom_button(__("Disconnect"), async () => {
+					frappe.warn(__('Are you sure you want to proceed?'),
 						__("You will need to login again with '{}' before next use!", [frm.doc.shop_name]),
 						() => {
 							// action to perform if proceeded
@@ -134,14 +134,14 @@ frappe.ui.form.on("Etsy Shop", {
 								},
 							});
 						},
-						'Disconnect',
+						__('Disconnect'),
 						false // Sets dialog as minimizable
 					)
 				});
 
 				frappe.db.get_single_value('Etsy Settings', 'etsy_enabled').then(etsy_enabled => {
 					if (etsy_enabled == 0) {
-						frm.set_intro("Synchronisation is not enabled! 'Etsy Settings > Enable Synchronisation'", 'yellow');
+						frm.set_intro(__("Synchronisation is not enabled! 'Etsy Settings > Enable Synchronisation'"), 'yellow');
 					}
 				})
 			}
@@ -151,7 +151,7 @@ frappe.ui.form.on("Etsy Shop", {
 
 		frappe.db.get_single_value('Selling Settings', 'cust_master_name').then(cust_master_name => {
             if (cust_master_name === 'Customer Name') {
-                frm.set_intro("It is not recommended to add new customers by name! 'Selling Settings > Customer Naming By' - using 'Naming Series' is preferred.", 'yellow');
+                frm.set_intro(__("It is not recommended to add new customers by name! 'Selling Settings > Customer Naming By' - using 'Naming Series' is preferred."), 'yellow');
             }
         })
         frappe.db.get_single_value('Selling Settings', 'customer_group').then(customer_group => {

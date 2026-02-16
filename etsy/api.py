@@ -387,7 +387,7 @@ def synchronise_receipts():
             frappe.db.commit()
         except Exception:
             frappe.db.rollback()
-            frappe.log_error(f"Etsy: Failed to sync receipts for shop {shop.name}")
+            frappe.log_error("Etsy: Failed to sync receipts for shop {0}".format(shop.name))
 
 
 def synchronise_listings():
@@ -403,4 +403,4 @@ def synchronise_listings():
             frappe.db.commit()
         except Exception:
             frappe.db.rollback()
-            frappe.log_error(f"Etsy: Failed to sync listings for shop {shop.name}")
+            frappe.log_error("Etsy: Failed to sync listings for shop {0}".format(shop.name))
