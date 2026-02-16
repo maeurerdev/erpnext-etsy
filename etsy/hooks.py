@@ -1,8 +1,8 @@
 app_name = "etsy"
 app_title = "Etsy"
-app_publisher = "Cornstarch3D"
+app_publisher = "maeurerdev"
 app_description = "Etsy Integration for ERPnext"
-app_email = "info@cornstarch3d.de"
+app_email = "maeurerdev@users.noreply.github.com"
 app_license = "GNU General Public License (v3)"
 
 etsy_custom_fields = {

@@ -1,5 +1,3 @@
-# Copyright (c) 2026, Cornstarch3D and contributors
-# For license information, please see license.txt
 from typing import Optional
 
 import frappe
