@@ -56,7 +56,7 @@ class EtsyShop(Document):
 	### public
 	def get_auth_header(self) -> dict:
 		if not self.token_exists():
-			frappe.log_error(f"Etsy: Access token does not exist for shop {self.name}")
+			frappe.log_error("Etsy: Access token does not exist for shop {0}".format(self.name))
 			return None
 		
 		if self.token_expired():
@@ -68,7 +68,7 @@ class EtsyShop(Document):
 					token_url=TOKEN_URI,
 				)
 			except Exception:
-				frappe.log_error(f"Etsy: Token refresh failed for shop {self.name}")
+				frappe.log_error("Etsy: Token refresh failed for shop {0}".format(self.name))
 				return None
 
 			self.token_update(token)
@@ -122,7 +122,7 @@ class EtsyShop(Document):
 		try:
 			me = EtsyAPI(self).getMe()
 		except Exception:
-			frappe.log_error(f"Etsy: Failed to verify connection for shop {self.name}")
+			frappe.log_error("Etsy: Failed to verify connection for shop {0}".format(self.name))
 			self.status = "Disconnected"
 		else:
 			self.status = "Connected"
@@ -296,7 +296,7 @@ class EtsyShop(Document):
 				frappe.db.commit()
 			except Exception:
 				frappe.db.rollback()
-				frappe.log_error(f"Etsy: Failed to import listing {listing.listing_id}")
+				frappe.log_error("Etsy: Failed to import listing {0}".format(listing.listing_id))
 
 	def import_receipts(self, min_date:Optional[str]=None, max_date:Optional[str]=None, abort_on_exist:bool=False):
 		api = EtsyAPI(self)
@@ -472,7 +472,7 @@ class EtsyShop(Document):
 				frappe.db.commit()
 			except Exception:
 				frappe.db.rollback()
-				frappe.log_error(f"Etsy: Failed to import receipt {receipt.receipt_id}")
+				frappe.log_error("Etsy: Failed to import receipt {0}".format(receipt.receipt_id))
 
 
 ### background job entry points for enqueued imports

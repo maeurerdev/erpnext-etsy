@@ -1,0 +1,106 @@
+# DocType labels and descriptions (no quotes - no commas in texts)
+'Sellings Settings > Default Customer Group' will be used if this is not set.,'Vertriebseinstellungen > Standardkundengruppe' wird verwendet wenn nicht gesetzt.,
+'Stock Settings > Default Item Group' will be used if this is not set.,'Lager-Einstellungen > Standard-Artikelgruppe' wird verwendet wenn nicht gesetzt.,
+'System Settings > Language' will be used if this is not set.,'Systemverwaltung > Sprache' wird verwendet wenn nicht gesetzt.,
+Access Token,Access-Token,
+Active,Aktiv,
+API Credentials,API-Anmeldedaten,
+Bank Account for digital sales,Konto für digitale Verkäufe,
+Bank Account for physical sales,Konto für physische Verkäufe,
+Can also be defined per Listing,Kann auch pro Listing definiert werden,
+Code Verifier,Code-Verifier,
+Company,Unternehmen,
+Connected,Verbunden,
+Connection,Verbindung,
+Customer Group,Kundengruppe,
+Customer Naming Series,Kundennummernkreis,
+Customer Settings,Kundeneinstellungen,
+Default Unit of Measure,Standardmaßeinheit,
+Description,Beschreibung,
+Disconnected,Nicht verbunden,
+Draft,Entwurf,
+Edit,Bearbeiten,
+Enable Synchronisation,Synchronisation aktivieren,
+ERP Settings,ERP-Einstellungen,
+Etsy Customer ID,Etsy Kundennummer,
+Etsy Listing,Etsy-Listing,
+Etsy Order ID,Etsy Bestellnummer,
+Etsy Product ID,Etsy Artikelnummer,
+Etsy Property ID,Etsy Eigenschaftsnummer,
+Etsy Settings,Etsy-Einstellungen,
+Etsy Shop ID,Etsy Shop-ID,
+Etsy Shop,Etsy-Shop,
+Etsy User ID,Etsy Benutzer-ID,
+Expired,Abgelaufen,
+Expires At,Läuft ab am,
+Expires In,Läuft ab in,
+Image,Bild,
+in hours. Range: [1-24].\nSet to 0 to disable Sync.,in Stunden. Bereich: [1-24].\nAuf 0 setzen um Synchronisation zu deaktivieren.,
+in minutes. Range: [1-60].\nSet to 0 to disable Sync.,in Minuten. Bereich: [1-60].\nAuf 0 setzen um Synchronisation zu deaktivieren.,
+Inactive,Inaktiv,
+Item - Synchronisation,Artikel-Synchronisation,
+Item Group,Artikelgruppe,
+Item Name,Artikelname,
+Item Settings,Artikeleinstellungen,
+Item,Artikel,
+Language,Sprache,
+Last Sync,Letzte Synchronisation,
+Likes,Likes,
+Listing ID,Listing-ID,
+Maintain Stock,Lager verwalten,
+Naming Series for new Customers created by Etsy Integration.\nUse {ETSY_BUYER_ID} as placeholder for Etsy's Buyer ID.\nERPNext standards for Naming Series like 'Etsy-.YYYY.-{ETSY_BUYER_ID}' can be used. Leave blank to use the default Naming Series of Customer Doctype.,Nummernkreis für neue Kunden die durch die Etsy-Integration erstellt werden.\nVerwenden Sie {ETSY_BUYER_ID} als Platzhalter für Etsys Käufer-ID.\nERPNext-Standards für Nummernkreise wie 'Etsy-.YYYY.-{ETSY_BUYER_ID}' können verwendet werden. Leer lassen um den Standard-Nummernkreis des Kunden-DocType zu verwenden.,
+Naming Series for new Sales Invoices created by Etsy Integration.\nUse {ETSY_ORDER_ID} as placeholder for Etsy's Order ID.\nERPNext standards for Naming Series like 'Etsy-.YYYY.-{ETSY_ORDER_ID}' can be used. Leave blank to use the default Naming Series of Sales Invoice Doctype.,Nummernkreis für neue Ausgangsrechnungen die durch die Etsy-Integration erstellt werden.\nVerwenden Sie {ETSY_ORDER_ID} als Platzhalter für Etsys Bestell-ID.\nERPNext-Standards für Nummernkreise wie 'Etsy-.YYYY.-{ETSY_ORDER_ID}' können verwendet werden. Leer lassen um den Standard-Nummernkreis des Ausgangsrechnung-DocType zu verwenden.,
+Naming Series for new Sales Orders created by Etsy Integration.\nUse {ETSY_ORDER_ID} as placeholder for Etsy's Order ID.\nERPNext standards for Naming Series like 'Etsy-.YYYY.-{ETSY_ORDER_ID}' can be used. Leave blank to use the default Naming Series of Sales Order Doctype.,Nummernkreis für neue Aufträge die durch die Etsy-Integration erstellt werden.\nVerwenden Sie {ETSY_ORDER_ID} als Platzhalter für Etsys Bestell-ID.\nERPNext-Standards für Nummernkreise wie 'Etsy-.YYYY.-{ETSY_ORDER_ID}' können verwendet werden. Leer lassen um den Standard-Nummernkreis des Auftrag-DocType zu verwenden.,
+Next Sync,Nächste Synchronisation,
+Redirect URI,Redirect-URI,
+Refresh Token,Refresh-Token,
+Sales Invoice Naming Series,Rechnungsnummernkreis,
+Sales Order & Invoice Settings,Auftrag & Ausgangsrechnung Einstellungen,
+Sales Order - Synchronisation,Auftrags-Synchronisation,
+Sales Order Naming Series,Auftragsnummernkreis,
+Sales Tax Account,Umsatzsteuer-Konto,
+Scheduled Job Type,Geplanter Auftragstyp,
+Scheduler Link,Scheduler-Verknüpfung,
+Settings,Einstellungen,
+Shipping Tax Account,Versandkosten-Konto,
+Sold Out,Ausverkauft,
+Sync Interval,Synchronisationsintervall,
+Token State,Token-Status,
+Token Type,Token-Typ,
+Unit of Measure,Maßeinheit,
+Use localhost,Localhost verwenden,
+Views,Aufrufe,
+
+# JS/Python translations (with quotes - commas in texts allowed)
+"'listing_state' must be one of: {0}","'listing_state' muss einer der folgenden sein: {0}",""
+"Also create or update Item Attributes of the selected Listings.","Artikelattribute der ausgewählten Listings ebenfalls erstellen oder aktualisieren.",""
+"Also create or update Items & Variants of the selected Listings.","Artikel & Varianten der ausgewählten Listings ebenfalls erstellen oder aktualisieren.",""
+"Are you sure you want to proceed?","Sind Sie sicher, dass Sie fortfahren möchten?",""
+"CLIENT_ID is mandatory!","CLIENT_ID ist erforderlich!",""
+"CLIENT_SECRET is mandatory!","CLIENT_SECRET ist erforderlich!",""
+"Disconnect","Verbindung trennen",""
+"Etsy listing import completed for {0}.","Etsy-Listingsimport abgeschlossen für {0}.",""
+"Etsy Listing State","Etsy-Listing Status",""
+"Etsy Listings","Etsy-Listings",""
+"Etsy sales import completed for {0}.","Etsy-Verkaufsimport abgeschlossen für {0}.",""
+"Failed to queue listing import!","Listingimport konnte nicht gestartet werden!",""
+"Failed to queue sales import!","Verkaufsimport konnte nicht gestartet werden!",""
+"From date must be before To date!","Das Von-Datum muss vor dem Bis-Datum liegen!",""
+"From","Von","date"
+"Import Etsy Listings","Etsy-Listings importieren",""
+"Import Sales History","Verkaufsverlauf importieren",""
+"Import","Importieren",""
+"Include Attributes","Attribute einbeziehen",""
+"Include Items","Artikel einbeziehen",""
+"Invalid Parameters.","Ungültige Parameter.",""
+"Invalid token state! Check if the token has been created by the OAuth flow.","Ungültiger Token-Status! Prüfen Sie, ob der Token durch den OAuth-Flow erstellt wurde.",""
+"It is not recommended to add new customers by name! 'Selling Settings > Customer Naming By' - using 'Naming Series' is preferred.","Es wird nicht empfohlen, neue Kunden nach Kundenname hinzuzufügen! 'Vertriebseinstellungen > Benennung der Kunden' - die Verwendung von 'Nummernkreis' wird bevorzugt.",""
+"Listing import has been queued.","Listingimport wurde gestartet.",""
+"Listings with the selected state will be imported or updated.","Listings mit dem ausgewählten Status werden importiert oder aktualisiert.",""
+"Login with {} on Etsy","Mit {} bei Etsy anmelden",""
+"Please save before logging in!","Bitte speichern Sie vor der Anmeldung!",""
+"Sales History","Verkaufsverlauf",""
+"Sales import has been queued.","Verkaufsimport wurde gestartet.",""
+"Synchronisation is not enabled! 'Etsy Settings > Enable Synchronisation'","Synchronisation ist nicht aktiviert! 'Etsy-Einstellungen > Synchronisation aktivieren'",""
+"To","Bis","date"
+"You will need to login again with '{}' before next use!","Sie müssen sich vor der nächsten Verwendung erneut mit '{}' anmelden!",""
