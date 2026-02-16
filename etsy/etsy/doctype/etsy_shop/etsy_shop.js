@@ -68,11 +68,11 @@ frappe.ui.form.on("Etsy Shop", {
 						__('Import Etsy Listings'),
 						__('Import')
 					)
-				}, 'Import');
+				}, __('Import'));
 				frm.add_custom_button(__("Sales History"), async () => {
 					frappe.prompt([
 							{
-								label: __('From', context='date'),
+								label: __('From', null, 'date'),
 								fieldname: 'min_date',
 								fieldtype: 'Date',
 								default: `${new Date().getFullYear()}-01-01`
@@ -82,7 +82,7 @@ frappe.ui.form.on("Etsy Shop", {
 								fieldtype: 'Column Break'
 							},
 							{
-								label: __('To', context='date'),
+								label: __('To', null, 'date'),
 								fieldname: 'max_date',
 								fieldtype: 'Date',
 								default: frappe.datetime.nowdate()
@@ -119,7 +119,7 @@ frappe.ui.form.on("Etsy Shop", {
 						__('Import Sales History'),
 						__('Import')
 					)
-				}, 'Import');
+				}, __('Import'));
 
 				frm.add_custom_button(__("Disconnect"), async () => {
 					frappe.warn(__('Are you sure you want to proceed?'),

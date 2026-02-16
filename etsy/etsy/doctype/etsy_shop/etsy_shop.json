@@ -184,7 +184,7 @@
   },
   {
    "default": "EtsyUser-{ETSY_BUYER_ID}",
-   "description": "Naming Series for new Customers created by Etsy Integration.\nUse {ETSY_BUYER_ID} as placeholder for Etsy's Buyer UserID.\nERPnext standards for Naming Series like 'Etsy-.YYYY.-{ETSY_BUYER_ID}' can be used. Leave blank to use the default Naming Series of Customer Doctype.",
+   "description": "Naming Series for new Customers created by Etsy Integration.\nUse {ETSY_BUYER_ID} as placeholder for Etsy's Buyer ID.\nERPNext standards for Naming Series like 'Etsy-.YYYY.-{ETSY_BUYER_ID}' can be used. Leave blank to use the default Naming Series of Customer Doctype.",
    "fieldname": "customer_naming_series",
    "fieldtype": "Data",
    "label": "Customer Naming Series"
@@ -214,7 +214,7 @@
   },
   {
    "default": "EtsyOrder-{ETSY_ORDER_ID}",
-   "description": "Naming Series for new Sales Orders created by Etsy Integration.\nUse {ETSY_ORDER_ID} as placeholder for Etsy's Buyer UserID.\nERPnext standards for Naming Series like 'Etsy-.YYYY.-{ETSY_ORDER_ID}' can be used. Leave blank to use the default Naming Series of Sales Order Doctype.",
+   "description": "Naming Series for new Sales Orders created by Etsy Integration.\nUse {ETSY_ORDER_ID} as placeholder for Etsy's Order ID.\nERPNext standards for Naming Series like 'Etsy-.YYYY.-{ETSY_ORDER_ID}' can be used. Leave blank to use the default Naming Series of Sales Order Doctype.",
    "fieldname": "sales_order_naming_series",
    "fieldtype": "Data",
    "label": "Sales Order Naming Series"
@@ -259,7 +259,7 @@
   },
   {
    "default": "EtsyInvoice-{ETSY_ORDER_ID}",
-   "description": "Naming Series for new Sales Invoices created by Etsy Integration.\nUse {ETSY_ORDER_ID} as placeholder for Etsy's Buyer UserID.\nERPnext standards for Naming Series like 'Etsy-.YYYY.-{ETSY_ORDER_ID}' can be used. Leave blank to use the default Naming Series of Sales Invoice Doctype.",
+   "description": "Naming Series for new Sales Invoices created by Etsy Integration.\nUse {ETSY_ORDER_ID} as placeholder for Etsy's Order ID.\nERPNext standards for Naming Series like 'Etsy-.YYYY.-{ETSY_ORDER_ID}' can be used. Leave blank to use the default Naming Series of Sales Invoice Doctype.",
    "fieldname": "sales_invoice_naming_series",
    "fieldtype": "Data",
    "label": "Sales Invoice Naming Series"
