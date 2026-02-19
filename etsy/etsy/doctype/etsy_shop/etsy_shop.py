@@ -406,18 +406,21 @@ class EtsyShop(Document):
 						item.flags.ignore_mandatory = True
 						item.save()
 
-					sales_order.append(
-						"items",
-						{
-							"item_code": item.name,
-							"item_name": item.item_name,
-							"delivery_date": transaction.expected_ship_date.date() if transaction.expected_ship_date else sales_order.delivery_date,
-							"uom": item.stock_uom,
-							"qty": transaction.quantity,
-							"rate": transaction.price.as_float(),
-							"description": "".join([f"<b>{v.formatted_name}:</b> {v.formatted_value}<br>" for v in transaction.variations]),
-						},
-					)
+					sales_order_item = {
+						"item_code": item.name,
+						"item_name": item.item_name,
+						"delivery_date": transaction.expected_ship_date.date() if transaction.expected_ship_date else sales_order.delivery_date,
+						"uom": item.stock_uom,
+						"qty": transaction.quantity,
+						"rate": transaction.price.as_float(),
+						"description": "".join([f"<b>{v.formatted_name}:</b> {v.formatted_value}<br>" for v in transaction.variations]),
+					}
+					# Cost Center
+					cost_center = self.cost_center_digital if transaction.is_digital else self.cost_center_physical
+					if cost_center:
+						sales_order_item["cost_center"] = cost_center
+					
+					sales_order.append("items", sales_order_item)
 
 				# Tax and Shipping
 				if receipt.total_tax_cost.as_float() > 0.0:
@@ -457,17 +460,16 @@ class EtsyShop(Document):
 
 				### Payment
 				if receipt.is_paid:
-					bank_account = self.bank_account_digital if all([t.is_digital for t in receipt.transactions]) else self.bank_account_physical
-					payment_entry: Document = get_payment_entry(sales_invoice.doctype, sales_invoice.name, bank_account=bank_account)
+					payment_entry: Document = get_payment_entry(sales_invoice.doctype, sales_invoice.name, bank_account=self.bank_account)
 					payment_entry.reference_no = sales_invoice.name
 					payment_entry.posting_date = receipt.created_timestamp.date()
 					payment_entry.reference_date = receipt.created_timestamp.date()
 					payment_entry.insert(ignore_permissions=True)
 					payment_entry.submit()
 
-				# update Sales Order status
-				if receipt.is_shipped:
-					close_or_unclose_sales_orders(f'["{sales_order.name}"]', "Closed")
+					# close Sales Order if is_shipped or everything is_digital
+					if receipt.is_shipped or all([t.is_digital for t in receipt.transactions]):
+						close_or_unclose_sales_orders(f'["{sales_order.name}"]', "Closed")
 
 				frappe.db.commit()
 			except Exception:
