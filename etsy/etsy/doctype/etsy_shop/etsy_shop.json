@@ -33,10 +33,11 @@
   "sales_order_naming_series",
   "sales_tax_account",
   "shipping_tax_account",
+  "cost_center_physical",
+  "cost_center_digital",
   "column_break_ftdq",
   "sales_invoice_naming_series",
-  "bank_account_physical",
-  "bank_account_digital",
+  "bank_account",
   "customer_settings_section",
   "customer_naming_series",
   "customer_group",
@@ -272,23 +273,28 @@
    "read_only": 1
   },
   {
-   "fieldname": "bank_account_physical",
+   "fieldname": "bank_account",
    "fieldtype": "Link",
-   "label": "Bank Account for physical sales",
+   "label": "Bank Account",
    "options": "Account",
    "reqd": 1
   },
   {
-   "fieldname": "bank_account_digital",
+   "fieldname": "cost_center_physical",
    "fieldtype": "Link",
-   "label": "Bank Account for digital sales",
-   "options": "Account",
-   "reqd": 1
+   "label": "Cost Center for physical sales",
+   "options": "Cost Center"
+  },
+  {
+   "fieldname": "cost_center_digital",
+   "fieldtype": "Link",
+   "label": "Cost Center for digital sales",
+   "options": "Cost Center"
   }
  ],
  "grid_page_length": 50,
  "links": [],
- "modified": "2026-02-07 14:13:31.073151",
+ "modified": "2026-02-19 18:52:33.596026",
  "modified_by": "Administrator",
  "module": "Etsy",
  "name": "Etsy Shop",
