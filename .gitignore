@@ -8,5 +8,5 @@ __pycache__
 dist
 .env
 *.bak
+*.claude
 CLAUDE.md
-WORKORDER.md
