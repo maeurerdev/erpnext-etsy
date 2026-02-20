@@ -19,7 +19,7 @@
   "section_break_kmvr",
   "title",
   "description",
-  "inventory",
+  "tags",
   "settings_tab",
   "item_section",
   "item_name",
@@ -48,12 +48,6 @@
    "fieldname": "description",
    "fieldtype": "Text Editor",
    "label": "Description"
-  },
-  {
-   "fieldname": "inventory",
-   "fieldtype": "Long Text",
-   "label": "Inventory",
-   "read_only": 1
   },
   {
    "fieldname": "image",
@@ -113,7 +107,8 @@
   {
    "fieldname": "settings_tab",
    "fieldtype": "Tab Break",
-   "label": "Settings"
+   "label": "Settings",
+   "show_dashboard": 1
   },
   {
    "fieldname": "item_section",
@@ -156,6 +151,13 @@
    "fieldname": "listing_tab",
    "fieldtype": "Tab Break",
    "label": "Details"
+  },
+  {
+   "fieldname": "tags",
+   "fieldtype": "Table",
+   "label": "Tags",
+   "options": "Etsy Listing Tag",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
@@ -171,7 +173,7 @@
    "link_fieldname": "etsy_listing"
   }
  ],
- "modified": "2026-02-02 11:47:02.414527",
+ "modified": "2026-02-20 13:32:40.678898",
  "modified_by": "Administrator",
  "module": "Etsy",
  "name": "Etsy Listing",
