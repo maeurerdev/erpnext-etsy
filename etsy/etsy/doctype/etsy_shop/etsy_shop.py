@@ -570,7 +570,9 @@ def run_import_receipts(user, etsy_shop, min_date=None, max_date=None):
 
 
 ### public functions
-@frappe.whitelist(methods=["GET"], allow_guest=True)  # nosemgrep: frappe-semgrep-rules.rules.security.guest-whitelisted-method
+@frappe.whitelist(
+	methods=["GET"], allow_guest=True
+)  # nosemgrep: frappe-semgrep-rules.rules.security.guest-whitelisted-method
 def callback(code: str | None = None, state: str | None = None):
 	"""
 	Handle client's code.
