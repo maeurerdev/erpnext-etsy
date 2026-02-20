@@ -280,7 +280,10 @@ class EtsyShop(Document):
 
 				etsy_listing.title = listing.title
 				etsy_listing.description = listing.description
-				etsy_listing.inventory = str(listing.inventory)
+
+				etsy_listing.set("tags", [])
+				for tag in listing.tags:
+					etsy_listing.append("tags", {"tag": tag})
 
 				if listing.images:
 					etsy_listing.image = listing.images[0].get("url_170x135")
