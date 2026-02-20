@@ -41,9 +41,11 @@
   "customer_settings_section",
   "customer_naming_series",
   "customer_group",
+  "customer_type",
   "item_settings_section",
   "item_group",
-  "stock_uom"
+  "stock_uom",
+  "warehouse"
  ],
  "fields": [
   {
@@ -198,6 +200,13 @@
    "options": "Customer Group"
   },
   {
+   "default": "Individual",
+   "fieldname": "customer_type",
+   "fieldtype": "Select",
+   "label": "Customer Type",
+   "options": "Individual\nCompany"
+  },
+  {
    "fieldname": "column_break_kiqp",
    "fieldtype": "Column Break"
   },
@@ -255,6 +264,13 @@
    "options": "UOM"
   },
   {
+   "description": "Warehouse for physical items. Company default warehouse will be used if not set.",
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Warehouse",
+   "options": "Warehouse"
+  },
+  {
    "fieldname": "column_break_ftdq",
    "fieldtype": "Column Break"
   },
@@ -294,7 +310,7 @@
  ],
  "grid_page_length": 50,
  "links": [],
- "modified": "2026-02-19 18:52:33.596026",
+ "modified": "2026-02-20 16:52:27.533302",
  "modified_by": "Administrator",
  "module": "Etsy",
  "name": "Etsy Shop",

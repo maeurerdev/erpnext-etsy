@@ -358,7 +358,7 @@ class EtsyShop(Document):
 					customer.etsy_customer_id = receipt.buyer_user_id
 
 				customer.customer_name = receipt.name
-				customer.customer_type = "Individual"
+				customer.customer_type = self.customer_type or "Individual"
 				customer.customer_group = self.customer_group or frappe.defaults.get_global_default(
 					"customer_group"
 				)
@@ -476,6 +476,10 @@ class EtsyShop(Document):
 					)
 					if cost_center:
 						sales_order_item["cost_center"] = cost_center
+
+					# Warehouse (physical items only)
+					if not transaction.is_digital and self.warehouse:
+						sales_order_item["warehouse"] = self.warehouse
 
 					sales_order.append("items", sales_order_item)
 
