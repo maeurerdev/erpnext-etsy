@@ -1,28 +1,21 @@
-from typing import Optional
-
-import os
 import base64
-import secrets
-import hashlib
-
-from requests_oauthlib import OAuth2Session
-from urllib.parse import urlencode, urljoin, quote_plus, unquote_plus
-
-import pytz
 import datetime
+import hashlib
+import os
+import secrets
+from urllib.parse import quote_plus, unquote_plus, urlencode, urljoin
 
 import frappe
+import pytz
+from erpnext.accounts.doctype.payment_entry.payment_entry import get_payment_entry
+from erpnext.selling.doctype.sales_order.sales_order import close_or_unclose_sales_orders, make_sales_invoice
 from frappe import _
 from frappe.model.document import Document
 from frappe.utils import cint, cstr, get_system_timezone
+from requests_oauthlib import OAuth2Session
 
-from erpnext.selling.doctype.sales_order.sales_order import make_sales_invoice, close_or_unclose_sales_orders
-from erpnext.accounts.doctype.payment_entry.payment_entry import get_payment_entry
-
-from etsy.datastruct import ListingType
 from etsy.api import EtsyAPI, QP_getListingsByShop, QP_getShopReceipts, fetch_all
-
-
+from etsy.datastruct import ListingType
 
 AUTHORIZATION_URI = "https://www.etsy.com/oauth/connect"
 TOKEN_URI = "https://api.etsy.com/v3/public/oauth/token"
@@ -38,8 +31,17 @@ if any((os.getenv("CI"), frappe.conf.developer_mode, frappe.conf.allow_tests)):
 os.environ["OAUTHLIB_RELAX_TOKEN_SCOPE"] = "1"
 
 
-def short_title(title:str) -> str:  # TODO: move to utils
-	return title.replace("&quot;", '"').split(",")[0].split(";")[0].split("|")[0].split("•")[0].split(" - ")[0].split(" – ")[0].strip()[:60]
+def short_title(title: str) -> str:  # TODO: move to utils
+	return (
+		title.replace("&quot;", '"')
+		.split(",")[0]
+		.split(";")[0]
+		.split("|")[0]
+		.split("•")[0]
+		.split(" - ")[0]
+		.split(" – ")[0]
+		.strip()[:60]
+	)
 
 
 class EtsyShop(Document):
@@ -52,13 +54,13 @@ class EtsyShop(Document):
 			base_url = f"{splt[0]}://localhost:{splt[-1]}"
 		callback_path = f"/api/method/etsy.etsy.doctype.etsy_shop.etsy_shop.callback/{quote_plus(self.name)}"
 		self.redirect_uri = urljoin(base_url, callback_path)
-	
+
 	### public
 	def get_auth_header(self) -> dict:
 		if not self.token_exists():
-			frappe.log_error("Etsy: Access token does not exist for shop {0}".format(self.name))
+			frappe.log_error(f"Etsy: Access token does not exist for shop {self.name}")
 			return None
-		
+
 		if self.token_expired():
 			oauth_session = self.get_oauth2_session()
 
@@ -68,21 +70,21 @@ class EtsyShop(Document):
 					token_url=TOKEN_URI,
 				)
 			except Exception:
-				frappe.log_error("Etsy: Token refresh failed for shop {0}".format(self.name))
+				frappe.log_error(f"Etsy: Token refresh failed for shop {self.name}")
 				return None
 
 			self.token_update(token)
-			
+
 		return {
-            "x-api-key": f"{self.client_id}:{self.get_password('client_secret')}",
-            "Authorization": f"Bearer {self.get_password('access_token')}",
-        }
-	
+			"x-api-key": f"{self.client_id}:{self.get_password('client_secret')}",
+			"Authorization": f"Bearer {self.get_password('access_token')}",
+		}
+
 	### private
 	# Token
 	def token_exists(self) -> bool:
 		return bool(self.get_password("access_token", False))
-	
+
 	def token_expires_in(self) -> int:
 		system_timezone = pytz.timezone(get_system_timezone())
 		modified = frappe.utils.get_datetime(self.expires_in_datetime)
@@ -90,20 +92,20 @@ class EtsyShop(Document):
 		expiry_utc = modified.astimezone(pytz.utc)
 		now_utc = datetime.datetime.now(pytz.utc)
 		return cint((expiry_utc - now_utc).total_seconds())  # why do comp. in UTC?
-	
+
 	def token_expired(self) -> bool:
 		return self.token_expires_in() < 0
-	
-	def update_expires_in(self, seconds:int):
+
+	def update_expires_in(self, seconds: int):
 		self.expires_in = seconds
 		self.expires_in_datetime = frappe.utils.add_to_date(
 			datetime.datetime.now(pytz.timezone(get_system_timezone())),
 			seconds=seconds,
 			as_string=True,
-			as_datetime=True
+			as_datetime=True,
 		)
-	
-	def token_update(self, data:dict):
+
+	def token_update(self, data: dict):
 		"""
 		Store data returned by authorization flow.
 
@@ -122,7 +124,7 @@ class EtsyShop(Document):
 		try:
 			me = EtsyAPI(self).getMe()
 		except Exception:
-			frappe.log_error("Etsy: Failed to verify connection for shop {0}".format(self.name))
+			frappe.log_error(f"Etsy: Failed to verify connection for shop {self.name}")
 			self.status = "Disconnected"
 		else:
 			self.status = "Connected"
@@ -130,7 +132,7 @@ class EtsyShop(Document):
 			self.shop_id = cstr(me.shop_id)
 		self.save(ignore_permissions=True)
 		frappe.db.commit()
-	
+
 	def token_json(self) -> dict:
 		return {
 			"access_token": self.get_password("access_token", False),
@@ -138,7 +140,7 @@ class EtsyShop(Document):
 			"expires_in": self.token_expires_in(),
 			"token_type": self.token_type,
 		}
-	
+
 	# OAuth
 	def get_oauth2_session(self, init=False) -> OAuth2Session:
 		"""Return an auto-refreshing OAuth2 session which is an extension of a requests.Session()"""
@@ -163,12 +165,12 @@ class EtsyShop(Document):
 			redirect_uri=self.redirect_uri,
 			scope=SCOPES,
 		)
-	
+
 	def generate_code_verifier(self) -> str:
 		self.code_verifier = secrets.token_urlsafe(48)
 		self.save()
 		return self.code_verifier
-	
+
 	def generate_code_challenge(self) -> str:
 		m = hashlib.sha256(self.code_verifier.encode("utf-8"))
 		b64_encode = base64.urlsafe_b64encode(m.digest()).decode("utf-8")
@@ -181,16 +183,13 @@ class EtsyShop(Document):
 			frappe.throw(_("CLIENT_ID is mandatory!"))
 		if not self.client_secret:
 			frappe.throw(_("CLIENT_SECRET is mandatory!"))
-		
+
 		self.generate_code_verifier()
 		code_challenge = self.generate_code_challenge()
 
 		oauth = self.get_oauth2_session(init=True)
 		authorization_url, state = oauth.authorization_url(
-			AUTHORIZATION_URI,
-			code_challenge=code_challenge,
-			code_challenge_method="S256",
-			**QUERY_PARAMS
+			AUTHORIZATION_URI, code_challenge=code_challenge, code_challenge_method="S256", **QUERY_PARAMS
 		)
 
 		self.token_state = state
@@ -211,10 +210,12 @@ class EtsyShop(Document):
 		self.status = "Disconnected"
 		self.save(ignore_permissions=True)
 		frappe.db.commit()
-	
+
 	### Etsy Shop data import methods ###
 	@frappe.whitelist()
-	def enqueue_import_listings(self, listing_state:str="active", include_attributes:int=1, include_items:int=0):
+	def enqueue_import_listings(
+		self, listing_state: str = "active", include_attributes: int = 1, include_items: int = 0
+	):
 		"""Enqueue listing import as a background job to avoid request timeouts."""
 		frappe.enqueue(
 			"etsy.etsy.doctype.etsy_shop.etsy_shop.run_import_listings",
@@ -229,7 +230,7 @@ class EtsyShop(Document):
 		)
 
 	@frappe.whitelist()
-	def enqueue_import_receipts(self, min_date:Optional[str]=None, max_date:Optional[str]=None):
+	def enqueue_import_receipts(self, min_date: str | None = None, max_date: str | None = None):
 		"""Enqueue receipt import as a background job to avoid request timeouts."""
 		frappe.enqueue(
 			"etsy.etsy.doctype.etsy_shop.etsy_shop.run_import_receipts",
@@ -242,24 +243,39 @@ class EtsyShop(Document):
 			max_date=max_date,
 		)
 
-	def import_listings(self, listing_state:str="active", include_attributes:int=1, include_items:int=0, etsy_api:Optional[EtsyAPI]=None):
+	def import_listings(
+		self,
+		listing_state: str = "active",
+		include_attributes: int = 1,
+		include_items: int = 0,
+		etsy_api: EtsyAPI | None = None,
+	):
 		api = etsy_api or EtsyAPI(self)
 
 		if listing_state == "all":
 			for state in LISTING_STATES:
-				self.import_listings(listing_state=state, include_attributes=include_attributes, include_items=include_items, etsy_api=api)
+				self.import_listings(
+					listing_state=state,
+					include_attributes=include_attributes,
+					include_items=include_items,
+					etsy_api=api,
+				)
 			return
 
 		if listing_state not in LISTING_STATES:
 			frappe.throw(_("'listing_state' must be one of: {0}").format(LISTING_STATES))
 
-		for listing in fetch_all(lambda o: api.getListingsByShop(QP_getListingsByShop(
-			shop_id=self.shop_id,
-			state=listing_state,
-			limit=100,
-			offset=o,
-			includes=['Inventory', 'Images'],
-		))):
+		for listing in fetch_all(
+			lambda o: api.getListingsByShop(
+				QP_getListingsByShop(
+					shop_id=self.shop_id,
+					state=listing_state,
+					limit=100,
+					offset=o,
+					includes=["Inventory", "Images"],
+				)
+			)
+		):
 			try:
 				### Etsy Listing
 				if frappe.db.exists("Etsy Listing", cstr(listing.listing_id)):
@@ -270,7 +286,9 @@ class EtsyShop(Document):
 					etsy_listing.etsy_shop = self.name
 					# Etsy Listing Settings
 					etsy_listing.item_name = short_title(listing.title)
-					etsy_listing.item_group = self.item_group or frappe.defaults.get_global_default("item_group")
+					etsy_listing.item_group = self.item_group or frappe.defaults.get_global_default(
+						"item_group"
+					)
 					etsy_listing.stock_uom = self.stock_uom or frappe.defaults.get_global_default("stock_uom")
 					etsy_listing.is_stock_item = 1 - int(listing.listing_type is ListingType.DOWNLOAD)
 
@@ -299,18 +317,28 @@ class EtsyShop(Document):
 				frappe.db.commit()
 			except Exception:
 				frappe.db.rollback()
-				frappe.log_error("Etsy: Failed to import listing {0}".format(listing.listing_id))
+				frappe.log_error(f"Etsy: Failed to import listing {listing.listing_id}")
 
-	def import_receipts(self, min_date:Optional[str]=None, max_date:Optional[str]=None, abort_on_exist:bool=False):
+	def import_receipts(
+		self, min_date: str | None = None, max_date: str | None = None, abort_on_exist: bool = False
+	):
 		api = EtsyAPI(self)
 
-		for receipt in fetch_all(lambda o: api.getShopReceipts(QP_getShopReceipts(
-			shop_id = self.shop_id,
-			min_created=int(frappe.utils.get_datetime(f"{min_date} 00:00:00").timestamp()) if min_date else None,
-			max_created=int(frappe.utils.get_datetime(f"{max_date} 23:59:59").timestamp()) if max_date else None,
-			limit=100,
-			offset=o,
-		))):
+		for receipt in fetch_all(
+			lambda o: api.getShopReceipts(
+				QP_getShopReceipts(
+					shop_id=self.shop_id,
+					min_created=int(frappe.utils.get_datetime(f"{min_date} 00:00:00").timestamp())
+					if min_date
+					else None,
+					max_created=int(frappe.utils.get_datetime(f"{max_date} 23:59:59").timestamp())
+					if max_date
+					else None,
+					limit=100,
+					offset=o,
+				)
+			)
+		):
 			if frappe.db.exists("Sales Order", {"etsy_order_id": receipt.receipt_id}):
 				if abort_on_exist:
 					break
@@ -324,12 +352,16 @@ class EtsyShop(Document):
 				else:
 					customer = frappe.new_doc("Customer")
 					if naming_series := self.customer_naming_series:
-						customer.naming_series = str(naming_series).replace("{ETSY_BUYER_ID}", str(receipt.buyer_user_id))
+						customer.naming_series = str(naming_series).replace(
+							"{ETSY_BUYER_ID}", str(receipt.buyer_user_id)
+						)
 					customer.etsy_customer_id = receipt.buyer_user_id
 
 				customer.customer_name = receipt.name
 				customer.customer_type = "Individual"
-				customer.customer_group = (self.customer_group or frappe.defaults.get_global_default("customer_group"))
+				customer.customer_group = self.customer_group or frappe.defaults.get_global_default(
+					"customer_group"
+				)
 
 				customer.flags.ignore_mandatory = True
 				customer.save()
@@ -359,7 +391,9 @@ class EtsyShop(Document):
 
 				### Contact - makes no sense without email address
 				if receipt.buyer_email:
-					if contact_name := frappe.db.exists("Contact", {"etsy_customer_id": receipt.buyer_user_id}):
+					if contact_name := frappe.db.exists(
+						"Contact", {"etsy_customer_id": receipt.buyer_user_id}
+					):
 						contact = frappe.get_doc("Contact", contact_name)
 					else:
 						contact = frappe.new_doc("Contact")
@@ -385,13 +419,18 @@ class EtsyShop(Document):
 				### Sales Order
 				sales_order: Document = frappe.new_doc("Sales Order")
 				if naming_series := self.sales_order_naming_series:
-					sales_order.naming_series = str(naming_series).replace("{ETSY_ORDER_ID}", str(receipt.receipt_id))
+					sales_order.naming_series = str(naming_series).replace(
+						"{ETSY_ORDER_ID}", str(receipt.receipt_id)
+					)
 				sales_order.etsy_order_id = sales_order.po_no = receipt.receipt_id
 				sales_order.customer = customer
 				sales_order.company = self.company
 
 				sales_order.transaction_date = sales_order.po_date = receipt.created_timestamp.date()
-				sales_order.delivery_date = max([t.expected_ship_date.date() for t in receipt.transactions if t.expected_ship_date] + [receipt.create_timestamp.date()])
+				sales_order.delivery_date = max(
+					[t.expected_ship_date.date() for t in receipt.transactions if t.expected_ship_date]
+					+ [receipt.create_timestamp.date()]
+				)
 
 				# Items
 				for transaction in receipt.transactions:
@@ -405,24 +444,39 @@ class EtsyShop(Document):
 						item.item_group = self.item_group or frappe.defaults.get_global_default("item_group")
 						item.stock_uom = self.stock_uom or frappe.defaults.get_global_default("stock_uom")
 						item.is_stock_item = 1 - int(transaction.is_digital)
-						item.image = api.rest.getListingImage(api.client, transaction.listing_id, transaction.listing_image_id).json().get("url_170x135")
+						item.image = (
+							api.rest.getListingImage(
+								api.client, transaction.listing_id, transaction.listing_image_id
+							)
+							.json()
+							.get("url_170x135")
+						)
 						item.flags.ignore_mandatory = True
 						item.save()
 
 					sales_order_item = {
 						"item_code": item.name,
 						"item_name": item.item_name,
-						"delivery_date": transaction.expected_ship_date.date() if transaction.expected_ship_date else sales_order.delivery_date,
+						"delivery_date": transaction.expected_ship_date.date()
+						if transaction.expected_ship_date
+						else sales_order.delivery_date,
 						"uom": item.stock_uom,
 						"qty": transaction.quantity,
 						"rate": transaction.price.as_float(),
-						"description": "".join([f"<b>{v.formatted_name}:</b> {v.formatted_value}<br>" for v in transaction.variations]),
+						"description": "".join(
+							[
+								f"<b>{v.formatted_name}:</b> {v.formatted_value}<br>"
+								for v in transaction.variations
+							]
+						),
 					}
 					# Cost Center
-					cost_center = self.cost_center_digital if transaction.is_digital else self.cost_center_physical
+					cost_center = (
+						self.cost_center_digital if transaction.is_digital else self.cost_center_physical
+					)
 					if cost_center:
 						sales_order_item["cost_center"] = cost_center
-					
+
 					sales_order.append("items", sales_order_item)
 
 				# Tax and Shipping
@@ -453,7 +507,9 @@ class EtsyShop(Document):
 				### Sales Invoice
 				sales_invoice: Document = make_sales_invoice(sales_order.name)
 				if naming_series := self.sales_invoice_naming_series:
-					sales_invoice.naming_series = str(naming_series).replace("{ETSY_ORDER_ID}", str(receipt.receipt_id))
+					sales_invoice.naming_series = str(naming_series).replace(
+						"{ETSY_ORDER_ID}", str(receipt.receipt_id)
+					)
 				sales_invoice.etsy_order_id = receipt.receipt_id
 				sales_invoice.set_posting_time = 1
 				sales_invoice.posting_date = receipt.created_timestamp.date()
@@ -463,7 +519,9 @@ class EtsyShop(Document):
 
 				### Payment
 				if receipt.is_paid:
-					payment_entry: Document = get_payment_entry(sales_invoice.doctype, sales_invoice.name, bank_account=self.bank_account)
+					payment_entry: Document = get_payment_entry(
+						sales_invoice.doctype, sales_invoice.name, bank_account=self.bank_account
+					)
 					payment_entry.reference_no = sales_invoice.name
 					payment_entry.posting_date = receipt.created_timestamp.date()
 					payment_entry.reference_date = receipt.created_timestamp.date()
@@ -477,32 +535,43 @@ class EtsyShop(Document):
 				frappe.db.commit()
 			except Exception:
 				frappe.db.rollback()
-				frappe.log_error("Etsy: Failed to import receipt {0}".format(receipt.receipt_id))
+				frappe.log_error(f"Etsy: Failed to import receipt {receipt.receipt_id}")
 
 
 ### background job entry points for enqueued imports
 def run_import_listings(user, etsy_shop, listing_state="active", include_attributes=1, include_items=0):
-	shop:EtsyShop = frappe.get_doc("Etsy Shop", etsy_shop)
-	shop.import_listings(listing_state=listing_state, include_attributes=include_attributes, include_items=include_items)
+	shop: EtsyShop = frappe.get_doc("Etsy Shop", etsy_shop)
+	shop.import_listings(
+		listing_state=listing_state, include_attributes=include_attributes, include_items=include_items
+	)
 	frappe.publish_realtime(
 		"msgprint",
-		{"message": _("Etsy listing import completed for {0}.").format(etsy_shop), "indicator": "green", "alert": True},
+		{
+			"message": _("Etsy listing import completed for {0}.").format(etsy_shop),
+			"indicator": "green",
+			"alert": True,
+		},
 		user=user,
 	)
 
+
 def run_import_receipts(user, etsy_shop, min_date=None, max_date=None):
-	shop:EtsyShop = frappe.get_doc("Etsy Shop", etsy_shop)
+	shop: EtsyShop = frappe.get_doc("Etsy Shop", etsy_shop)
 	shop.import_receipts(min_date=min_date, max_date=max_date)
 	frappe.publish_realtime(
 		"msgprint",
-		{"message": _("Etsy sales import completed for {0}.").format(etsy_shop), "indicator": "green", "alert": True},
+		{
+			"message": _("Etsy sales import completed for {0}.").format(etsy_shop),
+			"indicator": "green",
+			"alert": True,
+		},
 		user=user,
 	)
 
 
 ### public functions
-@frappe.whitelist(methods=["GET"], allow_guest=True)
-def callback(code=None, state=None):
+@frappe.whitelist(methods=["GET"], allow_guest=True)  # nosemgrep: frappe-semgrep-rules.rules.security.guest-whitelisted-method
+def callback(code: str | None = None, state: str | None = None):
 	"""
 	Handle client's code.
 
@@ -518,7 +587,7 @@ def callback(code=None, state=None):
 	if len(path) != 4 or not path[3]:
 		frappe.throw(_("Invalid Parameters."))
 
-	etsy_shop:EtsyShop = frappe.get_doc("Etsy Shop", unquote_plus(path[3]))
+	etsy_shop: EtsyShop = frappe.get_doc("Etsy Shop", unquote_plus(path[3]))
 
 	if state != etsy_shop.token_state:
 		frappe.throw(_("Invalid token state! Check if the token has been created by the OAuth flow."))
@@ -537,7 +606,8 @@ def callback(code=None, state=None):
 	frappe.local.response["type"] = "redirect"
 	frappe.local.response["location"] = etsy_shop.get_url()
 
+
 @frappe.whitelist()
-def has_token(etsy_shop) -> bool:
-	shop:EtsyShop = frappe.get_doc("Etsy Shop", etsy_shop)
+def has_token(etsy_shop: str) -> bool:
+	shop: EtsyShop = frappe.get_doc("Etsy Shop", etsy_shop)
 	return shop.token_exists()

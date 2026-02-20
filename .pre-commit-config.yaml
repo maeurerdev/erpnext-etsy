@@ -15,10 +15,11 @@ repos:
       - id: check-json
       - id: check-toml
       - id: check-yaml
+        args: ['--unsafe']
       - id: debug-statements
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.8.1
+    rev: v0.15.1
     hooks:
       - id: ruff
         name: "Run ruff import sorter"

@@ -1,8 +1,6 @@
 import frappe
 from frappe.model.document import Document
 
-
-
 RECEIPTS_SCHEDULED_JOB_TYPE_METHOD = "etsy.api.synchronise_receipts"
 LISTINGS_SCHEDULED_JOB_TYPE_METHOD = "etsy.api.synchronise_listings"
 
@@ -11,19 +9,19 @@ class EtsySettings(Document):
 	@property
 	def sales_order_last_sync(self):
 		return self.get_scheduler(self.sales_order_scheduler_link).last_execution
-	
+
 	@property
 	def sales_order_next_sync(self):
 		return self.get_scheduler(self.sales_order_scheduler_link).next_execution
-	
+
 	@property
 	def item_last_sync(self):
 		return self.get_scheduler(self.item_scheduler_link).last_execution
-	
+
 	@property
 	def item_next_sync(self):
 		return self.get_scheduler(self.item_scheduler_link).next_execution
-	
+
 	def before_save(self):
 		### receipts
 		sales_order_interval = min(max(0, self.sales_order_sync_interval), 60)
@@ -50,7 +48,6 @@ class EtsySettings(Document):
 		item_job.save()
 
 		self.item_scheduler_link = item_job.name
-
 
 	def get_scheduler(self, scheduler_link):
 		"Return `Scheduled Job Type` if it exists, else create a new one"
