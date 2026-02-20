@@ -6,81 +6,81 @@ app_email = "maeurerdev@users.noreply.github.com"
 app_license = "GNU General Public License (v3)"
 
 etsy_custom_fields = {
-    "Customer": [
-        {
-            "fieldname": "etsy_customer_id",
-            "label": "Etsy Customer ID",
-            "fieldtype": "Data",
-            "insert_after": "naming_series",
-            "read_only": 1,
-            "unique": 1,
-        }
-    ],
-    "Contact": [
-        {
-            "fieldname": "etsy_customer_id",
-            "label": "Etsy Customer ID",
-            "fieldtype": "Data",
-            "insert_after": "company_name",
-            "read_only": 1,
-            "unique": 1,
-        }
-    ],
-    "Sales Order": [
-        {
-            "fieldname": "etsy_order_id",
-            "label": "Etsy Order ID",
-            "fieldtype": "Data",
-            "insert_after": "naming_series",
-            "read_only": 1,
-            "unique": 1,
-        }
-    ],
-    "Sales Invoice": [
-        {
-            "fieldname": "etsy_order_id",
-            "label": "Etsy Order ID",
-            "fieldtype": "Data",
-            "insert_after": "naming_series",
-            "read_only": 1,
-            "unique": 1,
-        }
-    ],
-    "Item": [
-        {
-            "fieldname": "etsy_product_id",
-            "label": "Etsy Product ID",
-            "fieldtype": "Data",
-            "insert_after": "naming_series",
-            "read_only": 1,
-            "unique": 1,
-        },
-        {
-            "fieldname": "etsy_listing",
-            "label": "Etsy Listing",
-            "fieldtype": "Link",
-            "options": "Etsy Listing",
-            "insert_after": "etsy_product_id",
-            "read_only": 1,
-        },
-    ],
-    "Item Attribute": [
-        {
-            "fieldname": "etsy_listing",
-            "label": "Etsy Listing",
-            "fieldtype": "Link",
-            "options": "Etsy Listing",
-            "insert_after": "numeric_values",
-            "read_only": 1,
-        },
-        {
-            "fieldname": "etsy_property_id",
-            "label": "Etsy Property ID",
-            "fieldtype": "Data",
-            "insert_after": "etsy_listing",
-            "read_only": 1,
-        },
-    ],
+	"Customer": [
+		{
+			"fieldname": "etsy_customer_id",
+			"label": "Etsy Customer ID",
+			"fieldtype": "Data",
+			"insert_after": "naming_series",
+			"read_only": 1,
+			"unique": 1,
+		}
+	],
+	"Contact": [
+		{
+			"fieldname": "etsy_customer_id",
+			"label": "Etsy Customer ID",
+			"fieldtype": "Data",
+			"insert_after": "company_name",
+			"read_only": 1,
+			"unique": 1,
+		}
+	],
+	"Sales Order": [
+		{
+			"fieldname": "etsy_order_id",
+			"label": "Etsy Order ID",
+			"fieldtype": "Data",
+			"insert_after": "naming_series",
+			"read_only": 1,
+			"unique": 1,
+		}
+	],
+	"Sales Invoice": [
+		{
+			"fieldname": "etsy_order_id",
+			"label": "Etsy Order ID",
+			"fieldtype": "Data",
+			"insert_after": "naming_series",
+			"read_only": 1,
+			"unique": 1,
+		}
+	],
+	"Item": [
+		{
+			"fieldname": "etsy_product_id",
+			"label": "Etsy Product ID",
+			"fieldtype": "Data",
+			"insert_after": "naming_series",
+			"read_only": 1,
+			"unique": 1,
+		},
+		{
+			"fieldname": "etsy_listing",
+			"label": "Etsy Listing",
+			"fieldtype": "Link",
+			"options": "Etsy Listing",
+			"insert_after": "etsy_product_id",
+			"read_only": 1,
+		},
+	],
+	"Item Attribute": [
+		{
+			"fieldname": "etsy_listing",
+			"label": "Etsy Listing",
+			"fieldtype": "Link",
+			"options": "Etsy Listing",
+			"insert_after": "numeric_values",
+			"read_only": 1,
+		},
+		{
+			"fieldname": "etsy_property_id",
+			"label": "Etsy Property ID",
+			"fieldtype": "Data",
+			"insert_after": "etsy_listing",
+			"read_only": 1,
+		},
+	],
 }
 
 # Apps
@@ -324,4 +324,3 @@ before_tests = "etsy.install.before_tests"
 # ------------
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
-

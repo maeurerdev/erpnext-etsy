@@ -33,7 +33,7 @@ class TestShortTitle(FrappeTestCase):
 		self.assertEqual(result, "Part One")
 
 	def test_html_entity_replacement(self):
-		self.assertEqual(short_title('He said &quot;hello&quot;'), 'He said "hello"')
+		self.assertEqual(short_title("He said &quot;hello&quot;"), 'He said "hello"')
 
 	def test_truncation_to_60_chars(self):
 		long_title = "A" * 100
