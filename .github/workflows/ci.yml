@@ -20,8 +20,9 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  PYTHON_VERSION: ${{ github.ref_name == 'version-16' && '3.14' || '3.11' }}
-  NODE_VERSION:   ${{ github.ref_name == 'version-16' && '24'   || '20'  }}
+  PYTHON_VERSION:    ${{ github.ref_name == 'version-16' && '3.14'                || '3.11' }}
+  NODE_VERSION:      ${{ github.ref_name == 'version-16' && '24'                  || '20'   }}
+  BENCH_TEST_FLAGS:  ${{ github.ref_name == 'version-16' && '--skip-before-tests' || ''     }}
 
 jobs:
   tests:
@@ -97,7 +98,7 @@ jobs:
         working-directory: /home/runner/frappe-bench
         run: |
           bench --site test_site set-config allow_tests true
-          bench --site test_site run-tests --app etsy
+          bench --site test_site run-tests --app etsy $BENCH_TEST_FLAGS
         env:
           TYPE: server
 
