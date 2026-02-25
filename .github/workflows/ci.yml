@@ -7,25 +7,21 @@ permissions:
 on:
   push:
     branches:
-      - main
-    paths:
-      - '**.py'
-      - '**.js'
-      - '**.yml'
-      - '**.yaml'
-      - '!**/*.md'
-  pull_request:
-    paths:
-      - '**.py'
-      - '**.js'
-      - '**.yml'
-      - '**.yaml'
-      - '!**/*.md'
+      - version-15
+      - version-16
+    paths-ignore:
+      - "**.md"
+      - "**.html"
+      - "**.css"
   workflow_dispatch:
 
 concurrency:
-  group: erpnext-etsy-${{ github.event.number }}
+  group: ci-${{ github.ref }}-${{ github.event.number }}
   cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: ${{ github.ref_name == 'version-16' && '3.14' || '3.11' }}
+  NODE_VERSION:   ${{ github.ref_name == 'version-16' && '24'   || '20'  }}
 
 jobs:
   tests:
@@ -37,7 +33,7 @@ jobs:
 
     services:
       mariadb:
-        image: mariadb:10.6
+        image: ${{ github.ref_name == 'version-16' && 'mariadb:11.8' || 'mariadb:10.6' }}
         env:
           MARIADB_ROOT_PASSWORD: root
         ports:
@@ -51,13 +47,21 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v6
         with:
-          python-version: '3.11'
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: 20.20
+          node-version: ${{ env.NODE_VERSION }}
           check-latest: true
+
+      - name: Check for valid Python & Merge Conflicts
+        run: |
+          python -m compileall -f "${GITHUB_WORKSPACE}"
+          if grep -lr --exclude-dir=node_modules "^<<<<<<< " "${GITHUB_WORKSPACE}"; then
+            echo "Found merge conflicts"
+            exit 1
+          fi
 
       - name: Add to Hosts
         run: echo "127.0.0.1 test_site" | sudo tee -a /etc/hosts

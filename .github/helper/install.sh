@@ -13,8 +13,9 @@ sudo apt install libcups2-dev redis-server mariadb-client libmariadb-dev
 
 pip install frappe-bench
 
+githubbranch=${GITHUB_BASE_REF:-${GITHUB_REF##*/}}
 frappeuser=${FRAPPE_USER:-"frappe"}
-frappebranch=${FRAPPE_BRANCH:-"version-15"}
+frappebranch=${FRAPPE_BRANCH:-$githubbranch}
 
 echo "Cloning Frappe..."
 git clone "https://github.com/${frappeuser}/frappe" --branch "${frappebranch}" --depth 1
@@ -38,18 +39,21 @@ mariadb --host 127.0.0.1 --port 3306 -u root -proot -e "FLUSH PRIVILEGES"
 
 # Install wkhtmltopdf (needed for PDF tests)
 install_whktml() {
-    wget -O /tmp/wkhtmltox.deb https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.jammy_amd64.deb
-    sudo apt install /tmp/wkhtmltox.deb
+    wget -O /tmp/wkhtmltox.tar.xz \
+      https://github.com/frappe/wkhtmltopdf/raw/master/wkhtmltox-0.12.3_linux-generic-amd64.tar.xz
+    tar -xf /tmp/wkhtmltox.tar.xz -C /tmp
+    sudo mv /tmp/wkhtmltox/bin/wkhtmltopdf /usr/local/bin/wkhtmltopdf
+    sudo chmod o+x /usr/local/bin/wkhtmltopdf
 }
 install_whktml &
 wkpid=$!
 
 cd ~/frappe-bench || exit
 
-# sed -i 's/watch:/# watch:/g' Procfile
-# sed -i 's/schedule:/# schedule:/g' Procfile
-# sed -i 's/socketio:/# socketio:/g' Procfile
-# sed -i 's/redis_socketio:/# redis_socketio:/g' Procfile
+sed -i 's/watch:/# watch:/g' Procfile
+sed -i 's/schedule:/# schedule:/g' Procfile
+sed -i 's/socketio:/# socketio:/g' Procfile
+sed -i 's/redis_socketio:/# redis_socketio:/g' Procfile
 
 echo "Getting apps..."
 bench get-app erpnext --branch "${frappebranch}"

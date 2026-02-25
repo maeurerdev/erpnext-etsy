@@ -1,0 +1,137 @@
+name: Auto-merge main into version branches
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [version-15, version-16]
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Merge main into ${{ matrix.target }}
+        run: |
+          git fetch origin
+          git checkout ${{ matrix.target }}
+
+          if ! git merge origin/main --no-edit -m "chore: auto-merge main into ${{ matrix.target }}"; then
+            CONFLICTS=$(git diff --name-only --diff-filter=U)
+            if [ "$CONFLICTS" = "etsy/__init__.py" ]; then
+              # Expected: major version conflict. Take main's content, re-patch below.
+              git checkout --theirs etsy/__init__.py
+              git add etsy/__init__.py
+              git commit --no-edit
+            else
+              echo "UNEXPECTED_CONFLICTS<<EOF" >> $GITHUB_ENV
+              echo "$CONFLICTS" >> $GITHUB_ENV
+              echo "EOF" >> $GITHUB_ENV
+              exit 1
+            fi
+          fi
+
+      - name: Patch version major
+        run: |
+          MAJOR=$(echo "${{ matrix.target }}" | grep -oE '[0-9]+')
+          python3 -c "
+          import re, sys
+          major = sys.argv[1]
+          path = 'etsy/__init__.py'
+          content = open(path).read()
+          patched = re.sub(
+              r'(__version__ = \")[0-9]+(\.[0-9]+\.[0-9]+\")',
+              rf'\g<1>{major}\2',
+              content
+          )
+          open(path, 'w').write(patched)
+          " "$MAJOR"
+
+      - name: Commit and push
+        run: |
+          git add etsy/__init__.py
+          git diff --quiet --cached || git commit -m "chore: set version major for ${{ matrix.target }}"
+          git push origin ${{ matrix.target }}
+
+      - name: Read new version
+        id: ver
+        run: |
+          V=$(python3 -c "
+          import re
+          m = re.search(r'__version__ = \"([^\"]+)\"', open('etsy/__init__.py').read())
+          print(m.group(1))
+          ")
+          echo "version=$V" >> $GITHUB_OUTPUT
+          echo "tag=v$V" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        continue-on-error: true
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const tag = '${{ steps.ver.outputs.tag }}';
+            const target = '${{ matrix.target }}';
+            const headSha = require('child_process')
+              .execSync('git rev-parse HEAD').toString().trim();
+
+            await github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: `refs/tags/${tag}`,
+              sha: headSha
+            });
+
+            await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: tag,
+              name: tag,
+              generate_release_notes: true,
+              target_commitish: target
+            });
+
+      - name: Open issue on unexpected conflict
+        if: failure() && env.UNEXPECTED_CONFLICTS != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Merge conflict: main → ${{ matrix.target }}`,
+              body: [
+                '## Auto-merge failed',
+                '',
+                `Merging \`main\` into \`${{ matrix.target }}\` failed due to conflicts in:`,
+                '```',
+                process.env.UNEXPECTED_CONFLICTS,
+                '```',
+                '',
+                '**Resolve manually:**',
+                '```bash',
+                'git fetch origin',
+                'git checkout ${{ matrix.target }}',
+                'git merge origin/main',
+                '# Fix conflicts, then:',
+                'git push origin ${{ matrix.target }}',
+                '```',
+                '',
+                `_Triggered by commit: ${context.sha}_`
+              ].join('\n')
+            })
