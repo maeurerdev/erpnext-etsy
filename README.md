@@ -3,7 +3,8 @@
 > [!IMPORTANT]
 > The term 'Etsy' is a trademark of Etsy, Inc. This application uses the Etsy API but is not endorsed or certified by Etsy, Inc.
 
-[![ERPNext](https://img.shields.io/badge/ERPNext-v15-blue)](https://github.com/frappe/erpnext)
+[![CI version-15](https://github.com/maeurerdev/erpnext-etsy/actions/workflows/ci.yml/badge.svg?branch=version-15)](https://github.com/maeurerdev/erpnext-etsy/actions/workflows/ci.yml?query=branch%3Aversion-15)
+[![CI version-16](https://github.com/maeurerdev/erpnext-etsy/actions/workflows/ci.yml/badge.svg?branch=version-16)](https://github.com/maeurerdev/erpnext-etsy/actions/workflows/ci.yml?query=branch%3Aversion-16)
 
 **📖 [Read the full documentation](https://maeurerdev.github.io/erpnext-etsy)**
 
