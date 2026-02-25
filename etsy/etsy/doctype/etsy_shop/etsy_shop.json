@@ -31,13 +31,16 @@
   "language",
   "sales_order_settings_section",
   "sales_order_naming_series",
-  "sales_tax_account",
-  "shipping_tax_account",
+  "vat_account",
+  "shipping_income_account",
   "cost_center_physical",
   "cost_center_digital",
   "column_break_ftdq",
   "sales_invoice_naming_series",
   "bank_account",
+  "income_account_physical",
+  "income_account_digital",
+  "discount_account",
   "customer_settings_section",
   "customer_naming_series",
   "customer_group",
@@ -234,18 +237,50 @@
    "options": "Item Group"
   },
   {
-   "fieldname": "sales_tax_account",
+   "description": "VAT collected from the buyer.",
+   "fieldname": "vat_account",
    "fieldtype": "Link",
-   "label": "Sales Tax Account",
+   "label": "VAT Account",
+   "options": "Account"
+  },
+  {
+   "description": "Used for shipping costs and gift wrap charges.",
+   "fieldname": "shipping_income_account",
+   "fieldtype": "Link",
+   "label": "Shipping Income Account",
    "options": "Account",
    "reqd": 1
   },
   {
-   "fieldname": "shipping_tax_account",
+   "fieldname": "income_account_physical",
    "fieldtype": "Link",
-   "label": "Shipping Tax Account",
-   "options": "Account",
-   "reqd": 1
+   "label": "Income Account for physical sales",
+   "options": "Account"
+  },
+  {
+   "fieldname": "cost_center_physical",
+   "fieldtype": "Link",
+   "label": "Cost Center for physical sales",
+   "options": "Cost Center"
+  },
+  {
+   "fieldname": "income_account_digital",
+   "fieldtype": "Link",
+   "label": "Income Account for digital sales",
+   "options": "Account"
+  },
+  {
+   "fieldname": "cost_center_digital",
+   "fieldtype": "Link",
+   "label": "Cost Center for digital sales",
+   "options": "Cost Center"
+  },
+  {
+   "description": "Account for coupon discounts.",
+   "fieldname": "discount_account",
+   "fieldtype": "Link",
+   "label": "Discount Account",
+   "options": "Account"
   },
   {
    "description": "Can also be defined per Listing",
@@ -278,23 +313,11 @@
    "label": "Bank Account",
    "options": "Account",
    "reqd": 1
-  },
-  {
-   "fieldname": "cost_center_physical",
-   "fieldtype": "Link",
-   "label": "Cost Center for physical sales",
-   "options": "Cost Center"
-  },
-  {
-   "fieldname": "cost_center_digital",
-   "fieldtype": "Link",
-   "label": "Cost Center for digital sales",
-   "options": "Cost Center"
   }
  ],
  "grid_page_length": 50,
  "links": [],
- "modified": "2026-02-19 18:52:33.596026",
+ "modified": "2026-02-25 15:29:47.428401",
  "modified_by": "Administrator",
  "module": "Etsy",
  "name": "Etsy Shop",
