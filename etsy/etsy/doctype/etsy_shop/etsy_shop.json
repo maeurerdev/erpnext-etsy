@@ -44,9 +44,11 @@
   "customer_settings_section",
   "customer_naming_series",
   "customer_group",
+  "customer_type",
   "item_settings_section",
   "item_group",
-  "stock_uom"
+  "stock_uom",
+  "warehouse"
  ],
  "fields": [
   {
@@ -201,6 +203,13 @@
    "options": "Customer Group"
   },
   {
+   "default": "Individual",
+   "fieldname": "customer_type",
+   "fieldtype": "Select",
+   "label": "Customer Type",
+   "options": "Individual\nCompany"
+  },
+  {
    "fieldname": "column_break_kiqp",
    "fieldtype": "Column Break"
   },
@@ -288,6 +297,13 @@
    "fieldtype": "Link",
    "label": "Default Unit of Measure",
    "options": "UOM"
+  },
+  {
+   "description": "Warehouse for physical items. Company default warehouse will be used if not set.",
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Warehouse",
+   "options": "Warehouse"
   },
   {
    "fieldname": "column_break_ftdq",
