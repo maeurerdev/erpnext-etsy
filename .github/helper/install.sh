@@ -76,7 +76,4 @@ bench --verbose --site test_site install-app etsy
 # Safety net
 bench --site test_site migrate
 
-# Sync all fixtures (ensures ERPNext reference data like Warehouse Type is present)
-bench --site test_site sync-fixtures
-
 echo "=== Test site setup completed successfully! ==="
