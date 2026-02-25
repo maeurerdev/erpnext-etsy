@@ -483,26 +483,45 @@ class EtsyShop(Document):
 
 					sales_order.append("items", sales_order_item)
 
-				# Tax and Shipping
-				if receipt.total_tax_cost.as_float() > 0.0:
+				# VAT and Shipping
+				# Note: total_tax_cost (US/non-EU marketplace facilitator tax) is intentionally excluded —
+				# Etsy collects and remits it directly and deducts it from the seller's payout, so it is
+				# never the seller's revenue and must not appear as a receivable.
+				if self.vat_account and receipt.total_vat_cost.as_float() > 0.0:
 					sales_order.append(
 						"taxes",
 						{
 							"charge_type": "Actual",
-							"account_head": self.sales_tax_account,
-							"tax_amount": receipt.total_tax_cost.as_float(),
-							"description": "Sales Tax Total",
+							"account_head": self.vat_account,
+							"tax_amount": receipt.total_vat_cost.as_float(),
+							"description": "VAT Total",
 						},
 					)
-				sales_order.append(
-					"taxes",
-					{
-						"charge_type": "Actual",
-						"account_head": self.shipping_tax_account,
-						"tax_amount": receipt.total_shipping_cost.as_float(),
-						"description": "Shipping Cost Total",
-					},
-				)
+				if receipt.total_shipping_cost.as_float() > 0.0:
+					sales_order.append(
+						"taxes",
+						{
+							"charge_type": "Actual",
+							"account_head": self.shipping_income_account,
+							"tax_amount": receipt.total_shipping_cost.as_float(),
+							"description": "Shipping Cost",
+						},
+					)
+				if receipt.gift_wrap_price.as_float() > 0.0:
+					sales_order.append(
+						"taxes",
+						{
+							"charge_type": "Actual",
+							"account_head": self.shipping_income_account,
+							"tax_amount": receipt.gift_wrap_price.as_float(),
+							"description": "Gift Wrap",
+						},
+					)
+
+				# Discount
+				if receipt.discount_amt.as_float() > 0.0:
+					sales_order.discount_amount = receipt.discount_amt.as_float()
+					sales_order.apply_discount_on = "Grand Total"
 
 				sales_order.flags.ignore_mandatory = True
 				sales_order.insert(ignore_permissions=True)
@@ -518,6 +537,21 @@ class EtsyShop(Document):
 				sales_invoice.set_posting_time = 1
 				sales_invoice.posting_date = receipt.created_timestamp.date()
 				sales_invoice.due_date = receipt.created_timestamp.date()
+
+				# Income Accounts
+				if self.income_account_physical or self.income_account_digital:
+					for invoice_item in sales_invoice.items:
+						is_stock = frappe.db.get_value("Item", invoice_item.item_code, "is_stock_item")
+						income_account = (
+							self.income_account_digital if not is_stock else self.income_account_physical
+						)
+						if income_account:
+							invoice_item.income_account = income_account
+
+				# Discount Account
+				if self.discount_account and sales_invoice.discount_amount:
+					sales_invoice.discount_account = self.discount_account
+
 				sales_invoice.insert(ignore_permissions=True)
 				sales_invoice.submit()
 
