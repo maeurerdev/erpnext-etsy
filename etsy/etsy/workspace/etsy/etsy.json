@@ -5,7 +5,7 @@
    "label": "Sales Order Trends"
   }
  ],
- "content": "[{\"id\":\"DKuXJJ-FqA\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Etsy</span>\",\"col\":12}},{\"id\":\"G1a7k6S6Wu\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Sales Order Trends\",\"col\":12}},{\"id\":\"wa-i5Vl0_U\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Quick Access</span>\",\"col\":12}},{\"id\":\"cK2PINPItQ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item\",\"col\":3}},{\"id\":\"9as2yJEfue\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Etsy Listing\",\"col\":3}},{\"id\":\"kCUQNmqCGV\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"zhwRKX2wx3\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Settings</span>\",\"col\":12}},{\"id\":\"YkNovCMW-p\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Etsy Shop\",\"col\":3}},{\"id\":\"vTYbqA_ogm\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Etsy Settings\",\"col\":3}}]",
+ "content": "[{\"id\":\"DKuXJJ-FqA\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Etsy</span>\",\"col\":12}},{\"id\":\"G1a7k6S6Wu\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Sales Order Trends\",\"col\":12}},{\"id\":\"wa-i5Vl0_U\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Quick Access<b></b></span>\",\"col\":12}},{\"id\":\"cK2PINPItQ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item\",\"col\":3}},{\"id\":\"9as2yJEfue\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Etsy Listing\",\"col\":3}},{\"id\":\"kCUQNmqCGV\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"zhwRKX2wx3\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Einstellungen<b></b></span>\",\"col\":12}},{\"id\":\"YkNovCMW-p\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Etsy Shop\",\"col\":3}},{\"id\":\"vTYbqA_ogm\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Etsy Settings\",\"col\":3}},{\"id\":\"cEp5q2TQIo\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Help\",\"col\":3}}]",
  "creation": "2026-02-19 17:00:21.453523",
  "custom_blocks": [],
  "docstatus": 0,
@@ -18,7 +18,7 @@
  "is_hidden": 0,
  "label": "Etsy",
  "links": [],
- "modified": "2026-02-19 17:51:51.319931",
+ "modified": "2026-02-25 21:55:07.784047",
  "modified_by": "Administrator",
  "module": "Etsy",
  "name": "Etsy",
@@ -37,6 +37,13 @@
    "link_to": "Etsy Settings",
    "stats_filter": "[]",
    "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Help",
+   "type": "URL",
+   "url": "https://maeurerdev.github.io/erpnext-etsy/"
   },
   {
    "color": "Grey",
