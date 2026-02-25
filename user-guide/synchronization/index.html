@@ -1,0 +1,2284 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://maeurerdev.github.io/erpnext-etsy/user-guide/synchronization/">
+      
+      
+        <link rel="prev" href="../orders-and-customers/">
+      
+      
+        <link rel="next" href="../custom-fields/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>Synchronization - Etsy Integration for ERPNext</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#synchronization" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Etsy Integration for ERPNext" class="md-header__button md-logo" aria-label="Etsy Integration for ERPNext" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Etsy Integration for ERPNext
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Synchronization
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-orange" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/maeurerdev/erpnext-etsy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+  </div>
+  <div class="md-source__repository">
+    maeurerdev/erpnext-etsy
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting-started/installation/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../shop-configuration/" class="md-tabs__link">
+          
+  
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../developer-guide/contributing/" class="md-tabs__link">
+          
+  
+  
+  Developer Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Etsy Integration for ERPNext" class="md-nav__button md-logo" aria-label="Etsy Integration for ERPNext" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Etsy Integration for ERPNext
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/maeurerdev/erpnext-etsy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+  </div>
+  <div class="md-source__repository">
+    maeurerdev/erpnext-etsy
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prerequisites & Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/setup-shop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup Your First Etsy Shop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/connect-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connect to Etsy API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/next-steps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Import & Next Steps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shop-configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Shop Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../listings-and-items/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Listings & Items
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../orders-and-customers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Orders & Customers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Synchronization
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Synchronization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sync-direction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sync Direction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manual-synchronization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual Synchronization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Manual Synchronization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#import-listings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Import Listings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#import-receipts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Import Receipts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#import-historic-receipts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Import Historic Receipts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automatic-synchronization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automatic Synchronization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Automatic Synchronization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#etsy-settings-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Etsy Settings Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Etsy Settings Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sales-order-synchronization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sales Order Synchronization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#item-synchronization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Item Synchronization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-scheduled-jobs-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Scheduled Jobs Work
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scheduled-job-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scheduled Job Types
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scheduled Job Types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sales-order-sync-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sales Order Sync Job
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#item-sync-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Item Sync Job
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disabling-sync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disabling Sync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sync-behavior-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sync Behavior Details
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sync Behavior Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#duplicate-prevention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Duplicate Prevention
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update Logic
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Update Logic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#listings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receipts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Receipts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-handling-during-sync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Handling During Sync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rate-limiting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rate Limiting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pagination" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pagination
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#factors-affecting-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Factors Affecting Performance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimization-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimization Tips
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-freshness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Freshness
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Freshness">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommended-intervals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended Intervals
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manual-vs-automatic-sync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual vs. Automatic Sync
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom-fields/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom Fields & Data Mapping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-shop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Shop Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../limitations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Limitations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developer Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer-guide/contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sync-direction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sync Direction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manual-synchronization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual Synchronization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Manual Synchronization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#import-listings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Import Listings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#import-receipts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Import Receipts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#import-historic-receipts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Import Historic Receipts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automatic-synchronization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automatic Synchronization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Automatic Synchronization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#etsy-settings-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Etsy Settings Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Etsy Settings Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sales-order-synchronization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sales Order Synchronization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#item-synchronization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Item Synchronization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-scheduled-jobs-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Scheduled Jobs Work
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scheduled-job-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scheduled Job Types
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scheduled Job Types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sales-order-sync-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sales Order Sync Job
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#item-sync-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Item Sync Job
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disabling-sync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disabling Sync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sync-behavior-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sync Behavior Details
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sync Behavior Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#duplicate-prevention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Duplicate Prevention
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update Logic
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Update Logic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#listings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receipts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Receipts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-handling-during-sync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Handling During Sync
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rate-limiting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rate Limiting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pagination" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pagination
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#factors-affecting-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Factors Affecting Performance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimization-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimization Tips
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-freshness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Freshness
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Freshness">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommended-intervals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended Intervals
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manual-vs-automatic-sync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual vs. Automatic Sync
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="synchronization">Synchronization<a class="headerlink" href="#synchronization" title="Permanent link">&para;</a></h1>
+<p>This page explains how data synchronization works between Etsy and ERPNext.</p>
+<h2 id="sync-direction">Sync Direction<a class="headerlink" href="#sync-direction" title="Permanent link">&para;</a></h2>
+<p>The integration is <strong>one-way</strong>: Etsy → ERPNext</p>
+<ul>
+<li>Data flows <strong>from Etsy to ERPNext</strong></li>
+<li>Changes in ERPNext are <strong>not</strong> pushed back to Etsy</li>
+<li>Etsy is the source of truth</li>
+</ul>
+<p>This design prevents accidental overwrites and keeps Etsy as your primary selling platform.</p>
+<h2 id="manual-synchronization">Manual Synchronization<a class="headerlink" href="#manual-synchronization" title="Permanent link">&para;</a></h2>
+<p>Trigger imports manually using buttons in the Etsy Shop doctype.</p>
+<h3 id="import-listings">Import Listings<a class="headerlink" href="#import-listings" title="Permanent link">&para;</a></h3>
+<p><strong>Button</strong>: <code>Import Listings</code></p>
+<ol>
+<li>Fetches all active listings from Etsy for this shop</li>
+<li>For each listing:</li>
+<li>Creates or updates an Etsy Listing document</li>
+<li>Fetches inventory data (variants, pricing, stock)</li>
+<li>Creates/updates Item Templates and Item Variants</li>
+<li>Creates/updates Item Attributes</li>
+<li>Logs any errors to Error Log</li>
+</ol>
+<p><strong>When to Use</strong>:
+- After adding new products on Etsy
+- When product details change (pricing, descriptions, images)
+- Periodically to ensure ERPNext has the latest listing data</p>
+<h3 id="import-receipts">Import Receipts<a class="headerlink" href="#import-receipts" title="Permanent link">&para;</a></h3>
+<p><strong>Button</strong>: <code>Import Receipts</code></p>
+<ol>
+<li>Fetches recent receipts (orders) from Etsy for this shop</li>
+<li>For each receipt:</li>
+<li>Creates or matches a Customer based on <code>etsy_customer_id</code></li>
+<li>Creates or updates a Contact with shipping/billing addresses</li>
+<li>Creates a Sales Order with line items</li>
+<li>Creates a Sales Invoice (if paid)</li>
+<li>Creates a Payment Entry (if paid)</li>
+<li>Logs any errors to Error Log</li>
+</ol>
+<p><strong>When to Use</strong>:
+- After receiving new orders on Etsy
+- To catch up on recent orders
+- Before automatic sync is enabled</p>
+<h3 id="import-historic-receipts">Import Historic Receipts<a class="headerlink" href="#import-historic-receipts" title="Permanent link">&para;</a></h3>
+<p><strong>Button</strong>: <code>Import Historic Receipts</code></p>
+<ol>
+<li>Opens a dialog prompting for a "From Date"</li>
+<li>Fetches all receipts from that date to now</li>
+<li>Processes each receipt the same as "Import Receipts"</li>
+<li>Handles pagination for large date ranges</li>
+</ol>
+<p><strong>When to Use</strong>:
+- Initial setup: Import all past orders
+- Gap filling: If sync was disabled for a period
+- Migration: Bringing historical data into ERPNext</p>
+<h2 id="automatic-synchronization">Automatic Synchronization<a class="headerlink" href="#automatic-synchronization" title="Permanent link">&para;</a></h2>
+<p>Configure scheduled background jobs in Etsy Settings to automate syncing.</p>
+<h3 id="etsy-settings-configuration">Etsy Settings Configuration<a class="headerlink" href="#etsy-settings-configuration" title="Permanent link">&para;</a></h3>
+<p>The <strong>Etsy Settings</strong> doctype is a singleton that controls automatic synchronization schedules.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Enable Synchronisation</strong></td>
+<td>Check</td>
+<td>Unchecked</td>
+<td>Master switch to enable/disable all automatic syncing.</td>
+</tr>
+</tbody>
+</table>
+<p>When disabled, all scheduled sync jobs are stopped. You can still manually import data via Etsy Shop buttons.</p>
+<h4 id="sales-order-synchronization">Sales Order Synchronization<a class="headerlink" href="#sales-order-synchronization" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Range</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sync Interval</strong></td>
+<td>Int</td>
+<td>1-60 minutes</td>
+<td>5</td>
+<td>How often to sync orders. Set to <code>0</code> to disable.</td>
+</tr>
+<tr>
+<td><strong>Last Sync</strong></td>
+<td>Datetime</td>
+<td>Read-only</td>
+<td>-</td>
+<td>Timestamp of last successful sync.</td>
+</tr>
+<tr>
+<td><strong>Next Sync</strong></td>
+<td>Datetime</td>
+<td>Read-only</td>
+<td>-</td>
+<td>When the next sync will run.</td>
+</tr>
+<tr>
+<td><strong>Scheduler Link</strong></td>
+<td>Link</td>
+<td>Read-only</td>
+<td>-</td>
+<td>Link to the Scheduled Job Type document.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="item-synchronization">Item Synchronization<a class="headerlink" href="#item-synchronization" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Range</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sync Interval</strong></td>
+<td>Int</td>
+<td>1-24 hours</td>
+<td>24</td>
+<td>How often to sync listings. Set to <code>0</code> to disable.</td>
+</tr>
+<tr>
+<td><strong>Last Sync</strong></td>
+<td>Datetime</td>
+<td>Read-only</td>
+<td>-</td>
+<td>Timestamp of last successful sync.</td>
+</tr>
+<tr>
+<td><strong>Next Sync</strong></td>
+<td>Datetime</td>
+<td>Read-only</td>
+<td>-</td>
+<td>When the next sync will run.</td>
+</tr>
+<tr>
+<td><strong>Scheduler Link</strong></td>
+<td>Link</td>
+<td>Read-only</td>
+<td>-</td>
+<td>Link to the Scheduled Job Type document.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="how-scheduled-jobs-work">How Scheduled Jobs Work<a class="headerlink" href="#how-scheduled-jobs-work" title="Permanent link">&para;</a></h3>
+<p>When you save Etsy Settings with synchronization enabled:</p>
+<ol>
+<li>The app creates or updates <strong>Scheduled Job Type</strong> documents</li>
+<li>Cron expressions are generated based on your interval settings</li>
+<li>ERPNext Scheduler automatically runs these jobs in the background</li>
+<li>Each job syncs data for all connected Etsy Shops</li>
+</ol>
+<p><strong>Cron Calculation Examples:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Interval</th>
+<th>Cron Expression</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5 minutes</td>
+<td><code>*/5 * * * *</code></td>
+<td>Every 5 minutes</td>
+</tr>
+<tr>
+<td>15 minutes</td>
+<td><code>*/15 * * * *</code></td>
+<td>Every 15 minutes</td>
+</tr>
+<tr>
+<td>1 hour</td>
+<td><code>0 * * * *</code></td>
+<td>Every hour at minute 0</td>
+</tr>
+<tr>
+<td>6 hours</td>
+<td><code>0 */6 * * *</code></td>
+<td>Every 6 hours</td>
+</tr>
+<tr>
+<td>24 hours</td>
+<td><code>0 */24 * * *</code></td>
+<td>Every 24 hours</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Performance Consideration</p>
+<p>Sales orders change frequently, so a 5-minute interval is reasonable. Listings change less often, so 24 hours is sufficient for most shops.</p>
+</div>
+<h3 id="scheduled-job-types">Scheduled Job Types<a class="headerlink" href="#scheduled-job-types" title="Permanent link">&para;</a></h3>
+<p>Two Scheduled Job Types are created:</p>
+<h4 id="sales-order-sync-job">Sales Order Sync Job<a class="headerlink" href="#sales-order-sync-job" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Function</strong>: <code>etsy.api.synchronise_receipts</code></li>
+<li><strong>Frequency</strong>: Based on "Sales Order Sync Interval" (1-60 minutes)</li>
+<li><strong>Cron Example</strong>: <code>*/5 * * * *</code> (every 5 minutes)</li>
+</ul>
+<p>Loops through all Etsy Shops with status = "Connected", calls <code>import_receipts()</code> on each, and logs errors per shop without stopping the entire job.</p>
+<h4 id="item-sync-job">Item Sync Job<a class="headerlink" href="#item-sync-job" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Function</strong>: <code>etsy.api.synchronise_listings</code></li>
+<li><strong>Frequency</strong>: Based on "Item Sync Interval" (1-24 hours)</li>
+<li><strong>Cron Example</strong>: <code>0 */24 * * *</code> (every 24 hours)</li>
+</ul>
+<p>Loops through all Etsy Shops with status = "Connected", calls <code>import_listings()</code> on each, and logs errors per shop without stopping the entire job.</p>
+<p><img alt="Scheduled Job Type" src="../images/features-scheduled-job-type.png" /></p>
+<!-- IMAGE: Screenshot of a Scheduled Job Type document (e.g., "Etsy: Sync Sales Orders") showing the job name, method (etsy.api.synchronise_receipts), "Cron Format" field (e.g., */5 * * * *), "Stopped" checkbox unchecked, and "Last Execution" timestamp -->
+
+<h3 id="disabling-sync">Disabling Sync<a class="headerlink" href="#disabling-sync" title="Permanent link">&para;</a></h3>
+<p>To disable synchronization:</p>
+<ul>
+<li><strong>Globally</strong>: Uncheck "Enable Synchronisation" in Etsy Settings</li>
+<li><strong>Per Data Type</strong>: Set sync interval to <code>0</code></li>
+</ul>
+<p>When disabled, Scheduled Job Types are updated with <code>stopped = 1</code>, preventing further execution.</p>
+<h3 id="monitoring">Monitoring<a class="headerlink" href="#monitoring" title="Permanent link">&para;</a></h3>
+<p><strong>In Etsy Settings</strong>:
+- <strong>Last Sync</strong>: Shows when the job last ran successfully
+- <strong>Next Sync</strong>: Shows when the job will run next
+- <strong>Scheduler Link</strong>: Direct link to the Scheduled Job Type</p>
+<p><img alt="Monitoring in Etsy Settings" src="../images/sync-monitoring-settings.png" /></p>
+<!-- IMAGE: Screenshot of Etsy Settings with sync enabled, showing populated "Last Sync" and "Next Sync" timestamps, and clickable "Scheduler Link" fields for both Sales Order and Item sync sections -->
+
+<p><strong>In Scheduled Job Type</strong>:
+- View the job document via the Scheduler Link
+- Check <strong>Last Execution</strong> timestamp
+- View execution logs</p>
+<p><img alt="Scheduled Job Execution" src="../images/sync-scheduled-job-execution.png" /></p>
+<!-- IMAGE: Screenshot of a Scheduled Job Type document showing execution details: "Last Execution" timestamp, execution status, and potentially a "View Logs" section or similar monitoring info -->
+
+<p><strong>In Error Log</strong>:
+- All sync errors are logged with full tracebacks
+- Search for "Etsy" in Error Log to find integration-related errors</p>
+<h2 id="sync-behavior-details">Sync Behavior Details<a class="headerlink" href="#sync-behavior-details" title="Permanent link">&para;</a></h2>
+<h3 id="duplicate-prevention">Duplicate Prevention<a class="headerlink" href="#duplicate-prevention" title="Permanent link">&para;</a></h3>
+<p>The integration uses unique custom fields to prevent duplicate records:</p>
+<table>
+<thead>
+<tr>
+<th>DocType</th>
+<th>Unique Field</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Customer</td>
+<td><code>etsy_customer_id</code></td>
+<td>Prevents duplicate customers for the same Etsy buyer</td>
+</tr>
+<tr>
+<td>Contact</td>
+<td><code>etsy_customer_id</code></td>
+<td>Prevents duplicate contacts</td>
+</tr>
+<tr>
+<td>Sales Order</td>
+<td><code>etsy_order_id</code></td>
+<td>Prevents duplicate orders for the same Etsy receipt</td>
+</tr>
+<tr>
+<td>Sales Invoice</td>
+<td><code>etsy_order_id</code></td>
+<td>Links invoice to order</td>
+</tr>
+<tr>
+<td>Item</td>
+<td><code>etsy_product_id</code></td>
+<td>Prevents duplicate items for the same Etsy product</td>
+</tr>
+</tbody>
+</table>
+<p><strong>How It Works</strong>:
+- Before creating a new document, the app checks if one with the same Etsy ID exists
+- If it exists, the record is updated (or skipped if no updates are needed)
+- If it doesn't exist, a new record is created</p>
+<h3 id="update-logic">Update Logic<a class="headerlink" href="#update-logic" title="Permanent link">&para;</a></h3>
+<h4 id="listings">Listings<a class="headerlink" href="#listings" title="Permanent link">&para;</a></h4>
+<p>When re-importing a listing:</p>
+<ul>
+<li><strong>Etsy Listing</strong>: Title, description, image, status, views, likes updated</li>
+<li><strong>Items</strong>: Name, description, pricing updated</li>
+<li><strong>Item Variants</strong>: New variants added; existing variants updated</li>
+<li><strong>Item Attributes</strong>: New values added to attributes</li>
+</ul>
+<h4 id="receipts">Receipts<a class="headerlink" href="#receipts" title="Permanent link">&para;</a></h4>
+<p>When re-importing a receipt:</p>
+<ul>
+<li>If the Sales Order already exists (matched by <code>etsy_order_id</code>), it's <strong>skipped</strong></li>
+<li>Orders are not updated after initial creation</li>
+<li>Subsequent changes on Etsy (e.g., address updates) require manual ERPNext edits</li>
+</ul>
+<h3 id="error-handling-during-sync">Error Handling During Sync<a class="headerlink" href="#error-handling-during-sync" title="Permanent link">&para;</a></h3>
+<p>Each record is processed in a try-except block:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">for</span> <span class="n">receipt</span> <span class="ow">in</span> <span class="n">receipts</span><span class="p">:</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        <span class="c1"># Process receipt</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        <span class="n">create_customer</span><span class="p">()</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>        <span class="n">create_sales_order</span><span class="p">()</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="n">create_sales_invoice</span><span class="p">()</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="n">create_payment_entry</span><span class="p">()</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="n">frappe</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>  <span class="c1"># Commit this record</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        <span class="n">frappe</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>  <span class="c1"># Rollback only this record</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        <span class="n">frappe</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Etsy Sync Error: Receipt </span><span class="si">{</span><span class="n">receipt</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        <span class="k">continue</span>  <span class="c1"># Move to next record</span>
+</span></code></pre></div>
+<p>This ensures:</p>
+<ul>
+<li>One bad record doesn't stop the entire sync</li>
+<li>Each record is atomic (all-or-nothing)</li>
+<li>Errors are logged for later review</li>
+</ul>
+<h3 id="rate-limiting">Rate Limiting<a class="headerlink" href="#rate-limiting" title="Permanent link">&para;</a></h3>
+<p>To respect Etsy's API rate limits:</p>
+<ul>
+<li><strong>Delay Between Requests</strong>: 0.25 seconds (250ms)</li>
+<li><strong>Implementation</strong>: In <code>EtsyAPI.fetch_all()</code> method</li>
+<li><strong>Applies To</strong>: Paginated requests (listing inventory, receipts)</li>
+</ul>
+<p><strong>Etsy Rate Limits</strong> (as of API v3):</p>
+<ul>
+<li>10 requests per second per OAuth token</li>
+<li>The 250ms delay ensures ~4 requests/second, well within limits</li>
+</ul>
+<h3 id="pagination">Pagination<a class="headerlink" href="#pagination" title="Permanent link">&para;</a></h3>
+<p>Etsy API returns results in pages. The integration handles this automatically.</p>
+<ul>
+<li><code>limit</code>: Number of records per page (default: 100)</li>
+<li><code>offset</code>: Starting position for the page (default: 0)</li>
+</ul>
+<p><strong>Example Flow</strong>:</p>
+<ol>
+<li>Request: <code>GET /receipts?limit=100&amp;offset=0</code> → Returns 100 receipts</li>
+<li>Request: <code>GET /receipts?limit=100&amp;offset=100</code> → Returns next 100 receipts</li>
+<li>Continue until API returns fewer than 100 receipts (last page)</li>
+</ol>
+<h2 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">&para;</a></h2>
+<h3 id="factors-affecting-performance">Factors Affecting Performance<a class="headerlink" href="#factors-affecting-performance" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Order Volume</strong>: More orders = longer sync time</li>
+<li><strong>Listing Count</strong>: More listings = longer sync time</li>
+<li><strong>Network Latency</strong>: Distance to Etsy's API servers</li>
+<li><strong>ERPNext Load</strong>: High database load can slow down document creation</li>
+<li><strong>Variant Complexity</strong>: Listings with many variants take longer to process</li>
+</ol>
+<h3 id="optimization-tips">Optimization Tips<a class="headerlink" href="#optimization-tips" title="Permanent link">&para;</a></h3>
+<p><strong>For High-Volume Shops</strong>:</p>
+<ul>
+<li><strong>Increase sync interval</strong>: Use 10-15 minutes for Sales Orders instead of 5</li>
+<li><strong>Stagger schedules</strong>: If managing multiple shops, offset their sync times</li>
+<li><strong>Historical imports</strong>: Run during off-peak hours</li>
+</ul>
+<p><strong>For Performance Monitoring</strong>:</p>
+<ul>
+<li><strong>Enable RQ (Redis Queue)</strong>: Use ERPNext's background job system for better performance</li>
+<li><strong>Monitor Error Log</strong>: Check for recurring errors that slow down sync</li>
+<li><strong>Database Indexing</strong>: Ensure custom fields (<code>etsy_*</code>) are indexed</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Background Processing</p>
+<p>Syncs run in the background via ERPNext Scheduler. They don't block your UI or other operations.</p>
+</div>
+<h2 id="data-freshness">Data Freshness<a class="headerlink" href="#data-freshness" title="Permanent link">&para;</a></h2>
+<p>How often your data is up-to-date depends on sync intervals:</p>
+<table>
+<thead>
+<tr>
+<th>Sync Interval</th>
+<th>Data Freshness</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1-5 minutes</td>
+<td>Near real-time</td>
+<td>High-volume shops, critical order processing</td>
+</tr>
+<tr>
+<td>10-30 minutes</td>
+<td>Recent</td>
+<td>Moderate-volume shops, standard operations</td>
+</tr>
+<tr>
+<td>1-6 hours</td>
+<td>Periodic</td>
+<td>Low-volume shops, non-critical updates</td>
+</tr>
+<tr>
+<td>24 hours</td>
+<td>Daily</td>
+<td>Listings that change infrequently</td>
+</tr>
+</tbody>
+</table>
+<h3 id="recommended-intervals">Recommended Intervals<a class="headerlink" href="#recommended-intervals" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Sales Orders</strong>: 5-10 minutes (orders need quick processing)</li>
+<li><strong>Listings</strong>: 24 hours (listings change less frequently)</li>
+</ul>
+<p>Adjust based on your shop's order volume and operational needs.</p>
+<h2 id="manual-vs-automatic-sync">Manual vs. Automatic Sync<a class="headerlink" href="#manual-vs-automatic-sync" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Manual Sync</th>
+<th>Automatic Sync</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Trigger</strong></td>
+<td>Button click</td>
+<td>Scheduled cron job</td>
+</tr>
+<tr>
+<td><strong>Frequency</strong></td>
+<td>On-demand</td>
+<td>Recurring (based on interval)</td>
+</tr>
+<tr>
+<td><strong>User Interaction</strong></td>
+<td>Required</td>
+<td>None (background)</td>
+</tr>
+<tr>
+<td><strong>Use Case</strong></td>
+<td>Immediate updates, testing</td>
+<td>Ongoing operations</td>
+</tr>
+<tr>
+<td><strong>Error Visibility</strong></td>
+<td>Immediate feedback</td>
+<td>Check Error Log</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Best Practice</strong>: Use manual sync during setup and testing, then enable automatic sync for production.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>

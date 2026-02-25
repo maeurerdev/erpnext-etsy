@@ -1,0 +1,2562 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://maeurerdev.github.io/erpnext-etsy/user-guide/troubleshooting/">
+      
+      
+        <link rel="prev" href="../limitations/">
+      
+      
+        <link rel="next" href="../../developer-guide/contributing/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>Troubleshooting - Etsy Integration for ERPNext</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#troubleshooting" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Etsy Integration for ERPNext" class="md-header__button md-logo" aria-label="Etsy Integration for ERPNext" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Etsy Integration for ERPNext
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Troubleshooting
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-orange" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/maeurerdev/erpnext-etsy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+  </div>
+  <div class="md-source__repository">
+    maeurerdev/erpnext-etsy
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting-started/installation/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../shop-configuration/" class="md-tabs__link">
+          
+  
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../developer-guide/contributing/" class="md-tabs__link">
+          
+  
+  
+  Developer Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Etsy Integration for ERPNext" class="md-nav__button md-logo" aria-label="Etsy Integration for ERPNext" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Etsy Integration for ERPNext
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/maeurerdev/erpnext-etsy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+  </div>
+  <div class="md-source__repository">
+    maeurerdev/erpnext-etsy
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prerequisites & Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/setup-shop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup Your First Etsy Shop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/connect-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connect to Etsy API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/next-steps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Import & Next Steps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shop-configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Shop Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../listings-and-items/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Listings & Items
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../orders-and-customers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Orders & Customers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../synchronization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Synchronization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom-fields/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom Fields & Data Mapping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-shop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Shop Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../limitations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Limitations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#oauth-and-authentication-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OAuth and Authentication Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OAuth and Authentication Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#error-oauth-callback-failed-or-invalid-redirect-uri" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error: "OAuth callback failed" or "Invalid redirect URI"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-access-token-expired" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error: "Access token expired"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-invalid-client-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error: "Invalid client credentials"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#import-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Import Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Import Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#orders-not-importing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Orders Not Importing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Orders Not Importing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#account-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Account Not Found"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customer-creation-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Customer Creation Failed"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#item-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Item Not Found"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listings-not-importing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listings Not Importing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Listings Not Importing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#item-group-not-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Item Group Not Set"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uom-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "UOM Not Found"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invalid-item-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Invalid Item Name"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#duplicate-records" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Duplicate Records
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#synchronization-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Synchronization Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Synchronization Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automatic-sync-not-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automatic Sync Not Running
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Automatic Sync Not Running">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scheduler-disabled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scheduler Disabled
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#job-marked-as-stopped" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Job Marked as Stopped
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cron-expression-invalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cron Expression Invalid
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sync-errors-in-error-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sync Errors in Error Log
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sync Errors in Error Log">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unique-constraint-violated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Unique constraint violated"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#document-not-saved" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Document not saved"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#slow-imports" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Slow Imports
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#high-memory-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        High Memory Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#item-and-variant-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Item and Variant Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Item and Variant Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variants-not-created" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variants Not Created
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#item-prices-not-updating" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Item Prices Not Updating
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stock-levels-out-of-sync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stock Levels Out of Sync
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#missing-custom-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Missing Custom Fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#naming-series-conflicts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Naming Series Conflicts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-and-network-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API and Network Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API and Network Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rate-limit-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rate Limit Errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-timeouts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network Timeouts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssl-certificate-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SSL Certificate Errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Help
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developer Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer-guide/contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#oauth-and-authentication-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OAuth and Authentication Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OAuth and Authentication Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#error-oauth-callback-failed-or-invalid-redirect-uri" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error: "OAuth callback failed" or "Invalid redirect URI"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-access-token-expired" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error: "Access token expired"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-invalid-client-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error: "Invalid client credentials"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#import-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Import Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Import Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#orders-not-importing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Orders Not Importing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Orders Not Importing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#account-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Account Not Found"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customer-creation-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Customer Creation Failed"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#item-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Item Not Found"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listings-not-importing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listings Not Importing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Listings Not Importing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#item-group-not-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Item Group Not Set"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uom-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "UOM Not Found"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invalid-item-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Invalid Item Name"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#duplicate-records" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Duplicate Records
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#synchronization-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Synchronization Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Synchronization Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automatic-sync-not-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automatic Sync Not Running
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Automatic Sync Not Running">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scheduler-disabled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scheduler Disabled
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#job-marked-as-stopped" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Job Marked as Stopped
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cron-expression-invalid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cron Expression Invalid
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sync-errors-in-error-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sync Errors in Error Log
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sync Errors in Error Log">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unique-constraint-violated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Unique constraint violated"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#document-not-saved" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Document not saved"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#slow-imports" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Slow Imports
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#high-memory-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        High Memory Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#item-and-variant-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Item and Variant Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Item and Variant Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variants-not-created" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variants Not Created
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#item-prices-not-updating" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Item Prices Not Updating
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stock-levels-out-of-sync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stock Levels Out of Sync
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#missing-custom-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Missing Custom Fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#naming-series-conflicts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Naming Series Conflicts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-and-network-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API and Network Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API and Network Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rate-limit-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rate Limit Errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-timeouts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network Timeouts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssl-certificate-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SSL Certificate Errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Help
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h1>
+<p>This guide helps you diagnose and resolve common issues with the Etsy Integration.</p>
+<h2 id="oauth-and-authentication-issues">OAuth and Authentication Issues<a class="headerlink" href="#oauth-and-authentication-issues" title="Permanent link">&para;</a></h2>
+<h3 id="error-oauth-callback-failed-or-invalid-redirect-uri">Error: "OAuth callback failed" or "Invalid redirect URI"<a class="headerlink" href="#error-oauth-callback-failed-or-invalid-redirect-uri" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms</strong>:
+- Clicking "Login" redirects to Etsy, but callback fails
+- Error message about redirect URI mismatch</p>
+<p><strong>Causes</strong>:
+- Redirect URI in ERPNext doesn't match the one configured in your Etsy Personal App
+- Site URL is incorrect or has changed</p>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li><strong>Verify Redirect URI</strong>:</li>
+<li>In ERPNext: Open Etsy Shop → Copy the "Redirect URI" field</li>
+<li>In Etsy Developer Portal: Go to your app → OAuth Redirect URIs</li>
+<li>
+<p>Ensure they <strong>exactly match</strong> (including <code>http://</code> or <code>https://</code>, port numbers, trailing slashes)</p>
+</li>
+<li>
+<p><strong>Update Site URL</strong>:
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>bench<span class="w"> </span>config<span class="w"> </span>dns_multitenant<span class="w"> </span>off
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>bench<span class="w"> </span>--site<span class="w"> </span><span class="o">[</span>site-name<span class="o">]</span><span class="w"> </span>set-config<span class="w"> </span>host_name<span class="w"> </span><span class="s2">&quot;https://yourdomain.com&quot;</span>
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>Use localhost for Development</strong>:</p>
+</li>
+<li>In Etsy Shop, check "Use localhost"</li>
+<li>Add <code>http://localhost:8000/api/method/etsy.etsy.doctype.etsy_shop.etsy_shop.oauth_callback</code> to Etsy app</li>
+</ol>
+<h3 id="error-access-token-expired">Error: "Access token expired"<a class="headerlink" href="#error-access-token-expired" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms</strong>:
+- API requests fail with "401 Unauthorized"
+- Etsy Shop status shows "Connected" but imports fail</p>
+<p><strong>Causes</strong>:
+- Access token expired and refresh failed
+- Refresh token is invalid or revoked</p>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li><strong>Reconnect the Shop</strong>:</li>
+<li>Click "Disconnect" in Etsy Shop</li>
+<li>Click "Login" to re-authenticate</li>
+<li>
+<p>This generates fresh tokens</p>
+</li>
+<li>
+<p><strong>Check Token Expiry</strong>:</p>
+</li>
+<li>Look at "Expires At" field in Etsy Shop</li>
+<li>
+<p>If it's in the past, tokens need refresh</p>
+</li>
+<li>
+<p><strong>Verify OAuth Credentials</strong>:</p>
+</li>
+<li>Ensure CLIENT_ID and CLIENT_SECRET are correct</li>
+<li>Regenerate them in Etsy Developer Portal if needed</li>
+</ol>
+<h3 id="error-invalid-client-credentials">Error: "Invalid client credentials"<a class="headerlink" href="#error-invalid-client-credentials" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms</strong>:
+- OAuth flow fails immediately
+- Error about invalid client_id or client_secret</p>
+<p><strong>Causes</strong>:
+- Incorrect CLIENT_ID or CLIENT_SECRET
+- Credentials copied with extra spaces or characters</p>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li><strong>Re-enter Credentials</strong>:</li>
+<li>Go to Etsy Developer Portal → Your Apps</li>
+<li>Copy Keystring (CLIENT_ID) carefully</li>
+<li>Copy Shared Secret (CLIENT_SECRET) carefully</li>
+<li>
+<p>Paste into Etsy Shop fields, ensure no extra spaces</p>
+</li>
+<li>
+<p><strong>Check App Status on Etsy</strong>:</p>
+</li>
+<li>Ensure your Etsy Personal App is active (not suspended)</li>
+</ol>
+<h2 id="import-issues">Import Issues<a class="headerlink" href="#import-issues" title="Permanent link">&para;</a></h2>
+<h3 id="orders-not-importing">Orders Not Importing<a class="headerlink" href="#orders-not-importing" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms</strong>:
+- Click "Import Receipts" but no Sales Orders are created
+- Sync runs but order count doesn't increase</p>
+<p><strong>Diagnosis Steps</strong>:</p>
+<ol>
+<li><strong>Check Error Log</strong>:</li>
+<li>Go to: Home &gt; Tools &gt; Error Log</li>
+<li>Search for "Etsy" or filter by today's date</li>
+<li>Review error messages</li>
+</ol>
+<p><img alt="Error Log with Etsy Errors" src="../images/troubleshoot-error-log.png" /></p>
+<!-- IMAGE: Screenshot of Error Log list filtered/searched for "Etsy" showing one or more error entries with titles like "Etsy Import Error" and timestamps -->
+
+<ol>
+<li><strong>Verify Connection</strong>:</li>
+<li>Open Etsy Shop document</li>
+<li>Check "Status" field shows "Connected"</li>
+<li>
+<p>Check "Expires At" is in the future</p>
+</li>
+<li>
+<p><strong>Check Etsy Shop Configuration</strong>:</p>
+</li>
+<li>Ensure required fields are filled:<ul>
+<li>Company</li>
+<li>Sales Tax Account</li>
+<li>Shipping Tax Account</li>
+<li>Bank Accounts</li>
+</ul>
+</li>
+</ol>
+<p><strong>Common Errors and Fixes</strong>:</p>
+<h4 id="account-not-found">"Account Not Found"<a class="headerlink" href="#account-not-found" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Error</strong>: <code>Account 'Sales Tax' does not exist</code></li>
+<li><strong>Fix</strong>: Set valid tax accounts in Etsy Shop → Sales Order &amp; Invoice Settings</li>
+</ul>
+<h4 id="customer-creation-failed">"Customer Creation Failed"<a class="headerlink" href="#customer-creation-failed" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Error</strong>: <code>Customer naming series not set</code></li>
+<li><strong>Fix</strong>: Set Customer Naming Series in Etsy Shop → Customer Settings (or leave blank for default)</li>
+</ul>
+<h4 id="item-not-found">"Item Not Found"<a class="headerlink" href="#item-not-found" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Error</strong>: <code>Item with Etsy Product ID X not found</code></li>
+<li><strong>Fix</strong>: Import listings first before importing orders</li>
+<li>Click "Import Listings" in Etsy Shop</li>
+<li>Then retry "Import Receipts"</li>
+</ul>
+<h3 id="listings-not-importing">Listings Not Importing<a class="headerlink" href="#listings-not-importing" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms</strong>:
+- Click "Import Listings" but no Etsy Listing documents are created
+- Items not created in ERPNext</p>
+<p><strong>Diagnosis Steps</strong>:</p>
+<ol>
+<li><strong>Check Active Listings on Etsy</strong>:</li>
+<li>Log in to Etsy → Shop Manager → Listings</li>
+<li>Ensure you have active listings</li>
+<li>
+<p>The integration only imports "Active" listings</p>
+</li>
+<li>
+<p><strong>Check Error Log</strong>:</p>
+</li>
+<li>Look for "Listing import failed" errors</li>
+<li>Review specific error messages</li>
+</ol>
+<p><strong>Common Errors and Fixes</strong>:</p>
+<h4 id="item-group-not-set">"Item Group Not Set"<a class="headerlink" href="#item-group-not-set" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Error</strong>: <code>Item Group is required</code></li>
+<li><strong>Fix</strong>: Set Item Group in Etsy Shop → Item Settings OR in each Etsy Listing → Settings tab</li>
+</ul>
+<h4 id="uom-not-found">"UOM Not Found"<a class="headerlink" href="#uom-not-found" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Error</strong>: <code>Unit of Measure 'Nos' does not exist</code></li>
+<li><strong>Fix</strong>: Set a valid UOM in Etsy Shop → Item Settings OR in each Etsy Listing → Settings tab</li>
+</ul>
+<h4 id="invalid-item-name">"Invalid Item Name"<a class="headerlink" href="#invalid-item-name" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Error</strong>: <code>Item Name exceeds maximum length</code></li>
+<li><strong>Fix</strong>: Edit the Etsy Listing → Settings tab → Set a shorter Item Name (max 60 characters)</li>
+</ul>
+<h3 id="duplicate-records">Duplicate Records<a class="headerlink" href="#duplicate-records" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms</strong>:
+- Multiple Customers for the same Etsy buyer
+- Multiple Sales Orders for the same Etsy receipt</p>
+<p><strong>Causes</strong>:
+- Custom fields not created properly during installation
+- Database index not applied</p>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li>
+<p><strong>Re-run Installation Hook</strong>:
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>bench<span class="w"> </span>--site<span class="w"> </span><span class="o">[</span>site-name<span class="o">]</span><span class="w"> </span>console
+</span></code></pre></div>
+   <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">etsy.install</span><span class="w"> </span><span class="kn">import</span> <span class="n">after_install</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">after_install</span><span class="p">()</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">exit</span><span class="p">()</span>
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>Verify Custom Fields</strong>:
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>bench<span class="w"> </span>--site<span class="w"> </span><span class="o">[</span>site-name<span class="o">]</span><span class="w"> </span>console
+</span></code></pre></div>
+   <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">frappe</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># Check if etsy_customer_id field exists on Customer</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">frappe</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="s2">&quot;Custom Field&quot;</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;dt&quot;</span><span class="p">:</span> <span class="s2">&quot;Customer&quot;</span><span class="p">,</span> <span class="s2">&quot;fieldname&quot;</span><span class="p">:</span> <span class="s2">&quot;etsy_customer_id&quot;</span><span class="p">})</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">exit</span><span class="p">()</span>
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>Manually Remove Duplicates</strong>:</p>
+</li>
+<li>Identify duplicate records</li>
+<li>Merge or delete duplicates manually</li>
+<li>Ensure future imports don't create duplicates</li>
+</ol>
+<h2 id="synchronization-issues">Synchronization Issues<a class="headerlink" href="#synchronization-issues" title="Permanent link">&para;</a></h2>
+<h3 id="automatic-sync-not-running">Automatic Sync Not Running<a class="headerlink" href="#automatic-sync-not-running" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms</strong>:
+- "Last Sync" timestamp in Etsy Settings doesn't update
+- Orders/listings not syncing automatically</p>
+<p><strong>Diagnosis Steps</strong>:</p>
+<ol>
+<li>
+<p><strong>Check Scheduler Status</strong>:
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>bench<span class="w"> </span>--site<span class="w"> </span><span class="o">[</span>site-name<span class="o">]</span><span class="w"> </span>console
+</span></code></pre></div>
+   <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">frappe</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">frappe</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s2">&quot;System Settings&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;scheduler_enabled&quot;</span><span class="p">)</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1"># Should return 1 (enabled)</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">exit</span><span class="p">()</span>
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>Enable Scheduler</strong> (if disabled):
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>bench<span class="w"> </span>--site<span class="w"> </span><span class="o">[</span>site-name<span class="o">]</span><span class="w"> </span>enable-scheduler
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>bench<span class="w"> </span>restart
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>Check Scheduled Job Types</strong>:</p>
+</li>
+<li>Go to: Home &gt; Tools &gt; Scheduled Job Type</li>
+<li>Search for "Etsy"</li>
+<li>Verify:<ul>
+<li>"Stopped" is unchecked</li>
+<li>"Cron Format" is set correctly</li>
+</ul>
+</li>
+</ol>
+<p><img alt="Scheduled Job Type Troubleshooting" src="../images/troubleshoot-scheduled-job.png" /></p>
+<!-- IMAGE: Screenshot of a Scheduled Job Type document showing the "Stopped" checkbox (should be unchecked for active jobs), "Cron Format" field with a cron expression, and "Last Execution" timestamp to verify it's running -->
+
+<p><strong>Common Fixes</strong>:</p>
+<h4 id="scheduler-disabled">Scheduler Disabled<a class="headerlink" href="#scheduler-disabled" title="Permanent link">&para;</a></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>bench<span class="w"> </span>--site<span class="w"> </span><span class="o">[</span>site-name<span class="o">]</span><span class="w"> </span>enable-scheduler
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>bench<span class="w"> </span>restart
+</span></code></pre></div>
+<h4 id="job-marked-as-stopped">Job Marked as Stopped<a class="headerlink" href="#job-marked-as-stopped" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Open the Scheduled Job Type document</li>
+<li>Uncheck "Stopped"</li>
+<li>Save</li>
+</ul>
+<h4 id="cron-expression-invalid">Cron Expression Invalid<a class="headerlink" href="#cron-expression-invalid" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Check "Cron Format" field in Scheduled Job Type</li>
+<li>Should be like <code>*/5 * * * *</code> for 5-minute intervals</li>
+<li>Edit Etsy Settings and save to regenerate cron</li>
+</ul>
+<h3 id="sync-errors-in-error-log">Sync Errors in Error Log<a class="headerlink" href="#sync-errors-in-error-log" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms</strong>:
+- Sync runs but creates errors in Error Log
+- Some records imported successfully, others fail</p>
+<p><strong>Diagnosis</strong>:
+- Review Error Log entries for specific error messages
+- Each error is isolated to a single record</p>
+<p><strong>Common Errors</strong>:</p>
+<h4 id="unique-constraint-violated">"Unique constraint violated"<a class="headerlink" href="#unique-constraint-violated" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Error</strong>: <code>Duplicate entry 'X' for key 'etsy_order_id'</code></li>
+<li><strong>Meaning</strong>: Order already exists (expected behavior)</li>
+<li><strong>Action</strong>: No action needed; duplicate prevention working correctly</li>
+</ul>
+<h4 id="document-not-saved">"Document not saved"<a class="headerlink" href="#document-not-saved" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Error</strong>: <code>Sales Order could not be saved</code></li>
+<li><strong>Meaning</strong>: Validation failed (missing required field, invalid data)</li>
+<li><strong>Action</strong>: Review error message for specific field, fix configuration</li>
+</ul>
+<h2 id="performance-issues">Performance Issues<a class="headerlink" href="#performance-issues" title="Permanent link">&para;</a></h2>
+<h3 id="slow-imports">Slow Imports<a class="headerlink" href="#slow-imports" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms</strong>:
+- Imports take a very long time
+- Timeouts during large historical imports</p>
+<p><strong>Causes</strong>:
+- Large number of records to import
+- Slow network connection
+- High database load</p>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li>
+<p><strong>Increase Job Timeout</strong>:
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>bench<span class="w"> </span>--site<span class="w"> </span><span class="o">[</span>site-name<span class="o">]</span><span class="w"> </span>set-config<span class="w"> </span>job_timeout<span class="w"> </span><span class="m">3600</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>bench<span class="w"> </span>restart
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>Import in Batches</strong>:</p>
+</li>
+<li>For historical imports, use smaller date ranges</li>
+<li>
+<p>Instead of importing 1 year, import 1 month at a time</p>
+</li>
+<li>
+<p><strong>Optimize Database</strong>:
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>bench<span class="w"> </span>--site<span class="w"> </span><span class="o">[</span>site-name<span class="o">]</span><span class="w"> </span>mariadb
+</span></code></pre></div>
+   <div class="language-sql highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">OPTIMIZE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="o">`</span><span class="n">tabSales</span><span class="w"> </span><span class="k">Order</span><span class="o">`</span><span class="p">;</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">OPTIMIZE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="o">`</span><span class="n">tabCustomer</span><span class="o">`</span><span class="p">;</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">OPTIMIZE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="o">`</span><span class="n">tabItem</span><span class="o">`</span><span class="p">;</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="n">exit</span><span class="p">;</span>
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>Run During Off-Peak Hours</strong>:</p>
+</li>
+<li>Schedule large imports during low-traffic times</li>
+</ol>
+<h3 id="high-memory-usage">High Memory Usage<a class="headerlink" href="#high-memory-usage" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms</strong>:
+- Server memory usage spikes during sync
+- Out-of-memory errors</p>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li><strong>Reduce Sync Interval</strong>:</li>
+<li>Smaller batches = lower memory usage</li>
+<li>
+<p>Change Sales Order interval from 5 to 10-15 minutes</p>
+</li>
+<li>
+<p><strong>Increase Server Resources</strong>:</p>
+</li>
+<li>Add more RAM to your server</li>
+<li>Use a larger VM/instance</li>
+</ol>
+<h2 id="item-and-variant-issues">Item and Variant Issues<a class="headerlink" href="#item-and-variant-issues" title="Permanent link">&para;</a></h2>
+<h3 id="variants-not-created">Variants Not Created<a class="headerlink" href="#variants-not-created" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms</strong>:
+- Item Template created but no Item Variants
+- Listing has variations on Etsy but not in ERPNext</p>
+<p><strong>Diagnosis</strong>:
+- Check Error Log for "Variant creation failed"
+- Verify inventory data in Etsy Listing → Inventory field (JSON)</p>
+<p><strong>Common Causes</strong>:</p>
+<ol>
+<li><strong>Missing Attributes</strong>:</li>
+<li>Item Attributes not created properly</li>
+<li>
+<p><strong>Fix</strong>: Manually create Item Attributes matching Etsy properties (Color, Size, etc.)</p>
+</li>
+<li>
+<p><strong>Invalid Attribute Values</strong>:</p>
+</li>
+<li>Attribute values contain invalid characters</li>
+<li><strong>Fix</strong>: Edit Item Attribute, clean up values</li>
+</ol>
+<h3 id="item-prices-not-updating">Item Prices Not Updating<a class="headerlink" href="#item-prices-not-updating" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms</strong>:
+- Etsy prices change but ERPNext items have old prices</p>
+<p><strong>Explanation</strong>:
+- Prices are updated only when you manually import listings or when auto-sync runs
+- Price updates are not pushed back to Etsy</p>
+<p><strong>Solutions</strong>:
+- Manually click "Import Listings" to refresh prices
+- Enable automatic listing sync in Etsy Settings</p>
+<h3 id="stock-levels-out-of-sync">Stock Levels Out of Sync<a class="headerlink" href="#stock-levels-out-of-sync" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms</strong>:
+- Stock levels in ERPNext don't match Etsy</p>
+<p><strong>Explanation</strong>:
+- Stock sync is one-way (Etsy → ERPNext) and only on initial import
+- Ongoing stock sync is not supported</p>
+<p><strong>Workaround</strong>:
+- Manage stock on Etsy only
+- Use ERPNext for order processing and accounting, not inventory management
+- Or manually update stock levels in ERPNext after Etsy changes</p>
+<h2 id="configuration-issues">Configuration Issues<a class="headerlink" href="#configuration-issues" title="Permanent link">&para;</a></h2>
+<h3 id="missing-custom-fields">Missing Custom Fields<a class="headerlink" href="#missing-custom-fields" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms</strong>:
+- "etsy_*" fields not visible on Customer, Sales Order, etc.
+- Errors about custom fields not found</p>
+<p><strong>Diagnosis</strong>:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>bench<span class="w"> </span>--site<span class="w"> </span><span class="o">[</span>site-name<span class="o">]</span><span class="w"> </span>console
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">frappe</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">frappe</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="s2">&quot;Custom Field&quot;</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;fieldname&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;like&quot;</span><span class="p">,</span> <span class="s2">&quot;etsy_%&quot;</span><span class="p">]},</span> <span class="n">pluck</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="c1"># Should return multiple field names</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="n">exit</span><span class="p">()</span>
+</span></code></pre></div></p>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li>
+<p><strong>Re-run Installation</strong>:
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>bench<span class="w"> </span>--site<span class="w"> </span><span class="o">[</span>site-name<span class="o">]</span><span class="w"> </span>console
+</span></code></pre></div>
+   <div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">etsy.install</span><span class="w"> </span><span class="kn">import</span> <span class="n">after_install</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">after_install</span><span class="p">()</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="n">exit</span><span class="p">()</span>
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>Manually Create Custom Fields</strong>:</p>
+</li>
+<li>Go to: Customization &gt; Custom Field</li>
+<li>Create fields as defined in <code>hooks.py</code></li>
+</ol>
+<p><img alt="Custom Field List" src="../images/troubleshoot-custom-fields.png" /></p>
+<!-- IMAGE: Screenshot of Custom Field list view filtered by "etsy" showing all etsy_* custom fields with columns: Field Name, DocType (Customer, Sales Order, Item, etc.), Label -->
+
+<ol>
+<li><strong>Migrate Site</strong>:
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>bench<span class="w"> </span>--site<span class="w"> </span><span class="o">[</span>site-name<span class="o">]</span><span class="w"> </span>migrate
+</span></code></pre></div></li>
+</ol>
+<h3 id="naming-series-conflicts">Naming Series Conflicts<a class="headerlink" href="#naming-series-conflicts" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms</strong>:
+- Duplicate naming series errors
+- Naming series not following configured pattern</p>
+<p><strong>Causes</strong>:
+- Placeholder not used correctly
+- Naming series conflicts with existing series</p>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li><strong>Use Placeholders</strong>:</li>
+<li>For Sales Orders: <code>EtsyOrder-{ETSY_ORDER_ID}</code> (correct)</li>
+<li>
+<p>Not: <code>EtsyOrder-12345</code> (incorrect, hardcoded)</p>
+</li>
+<li>
+<p><strong>Avoid Conflicts</strong>:</p>
+</li>
+<li>Don't use the same naming series for Etsy and manual orders</li>
+<li>
+<p>Use unique prefixes like <code>Etsy-</code> or <code>ETSY-SO-</code></p>
+</li>
+<li>
+<p><strong>Leave Blank for Default</strong>:</p>
+</li>
+<li>If custom naming is causing issues, leave the field blank</li>
+<li>The integration will use the doctype's default naming series</li>
+</ol>
+<h2 id="api-and-network-issues">API and Network Issues<a class="headerlink" href="#api-and-network-issues" title="Permanent link">&para;</a></h2>
+<h3 id="rate-limit-errors">Rate Limit Errors<a class="headerlink" href="#rate-limit-errors" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms</strong>:
+- Error: "429 Too Many Requests"
+- Imports fail during large batches</p>
+<p><strong>Explanation</strong>:
+- Etsy API has rate limits (10 requests/second per token)
+- The app includes built-in rate limiting (250ms delay)</p>
+<p><strong>Solutions</strong>:
+- Wait a few minutes and retry
+- Rate limiting should handle this automatically
+- If persistent, reduce sync frequency</p>
+<h3 id="network-timeouts">Network Timeouts<a class="headerlink" href="#network-timeouts" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms</strong>:
+- Error: "Connection timeout" or "Request timeout"
+- Intermittent import failures</p>
+<p><strong>Causes</strong>:
+- Slow network connection
+- Etsy API temporary issues</p>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li><strong>Retry Import</strong>:</li>
+<li>Manual imports can be retried immediately</li>
+<li>
+<p>Automatic sync will retry on next schedule</p>
+</li>
+<li>
+<p><strong>Increase Timeout</strong>:
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>bench<span class="w"> </span>--site<span class="w"> </span><span class="o">[</span>site-name<span class="o">]</span><span class="w"> </span>set-config<span class="w"> </span>http_timeout<span class="w"> </span><span class="m">60</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>bench<span class="w"> </span>restart
+</span></code></pre></div></p>
+</li>
+</ol>
+<h3 id="ssl-certificate-errors">SSL Certificate Errors<a class="headerlink" href="#ssl-certificate-errors" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms</strong>:
+- Error: "SSL certificate verification failed"</p>
+<p><strong>Causes</strong>:
+- Outdated CA certificates on server
+- Firewall or proxy interfering with HTTPS</p>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li>
+<p><strong>Update CA Certificates</strong>:
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>ca-certificates
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>Check System Time</strong>:
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>date
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="c1"># Ensure system time is correct</span>
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>Disable SSL Verification</strong> (not recommended for production):</p>
+</li>
+<li>Only as a last resort and temporary fix</li>
+</ol>
+<h2 id="getting-help">Getting Help<a class="headerlink" href="#getting-help" title="Permanent link">&para;</a></h2>
+<p>If you've tried the solutions above and still have issues:</p>
+<ol>
+<li><strong>Check Error Log</strong>:</li>
+<li>Home &gt; Tools &gt; Error Log</li>
+<li>
+<p>Look for detailed error messages and stack traces</p>
+</li>
+<li>
+<p><strong>Search GitHub Issues</strong>:</p>
+</li>
+<li>Visit: <a href="https://github.com/maeurerdev/erpnext-etsy/issues">https://github.com/maeurerdev/erpnext-etsy/issues</a></li>
+<li>Search for similar issues</li>
+<li>
+<p>Check closed issues for solutions</p>
+</li>
+<li>
+<p><strong>Create a New Issue</strong>:</p>
+</li>
+<li>Click "New Issue" on GitHub</li>
+<li>
+<p>Provide:</p>
+<ul>
+<li>ERPNext version</li>
+<li>App version (commit hash)</li>
+<li>Detailed error messages from Error Log</li>
+<li>Steps to reproduce</li>
+<li>Relevant configuration (without sensitive data)</li>
+</ul>
+</li>
+<li>
+<p><strong>Frappe Community</strong>:</p>
+</li>
+<li>Post on <a href="https://discuss.frappe.io/">Frappe Forum</a></li>
+<li>Tag with "etsy" and "integration"</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>
