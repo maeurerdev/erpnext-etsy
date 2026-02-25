@@ -76,6 +76,5 @@ jobs:
           PR_VER=$(grep -oP '__version__ = "\K[^"]+' etsy/__init__.py)
           echo "main: $MAIN_VER  →  PR: $PR_VER"
           if [ "$MAIN_VER" = "$PR_VER" ]; then
-            echo "::error file=etsy/__init__.py::Version was not bumped. Current: $MAIN_VER — please increment before merging."
-            exit 1
+            echo "::warning file=etsy/__init__.py::Version was not bumped. Current: $MAIN_VER — no release will be created on merge."
           fi
